@@ -17,13 +17,19 @@ from pyrogram.parser import html as pyrogram_html
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.handlers import MessageHandler, CallbackQueryHandler
 
-from bot import app, IMAGE_URL, AUTHORIZED_CHATS, OWNER_ID
+from bot import app, IMAGE_URL, AUTHORIZED_CHATS, OWNER_ID, getConfig
 #from bot import dispatcher 
 from bot.helper import custom_filters
 from bot.helper.telegram_helper.filters import CustomFilters
 
 BOT_USERNAME = ''
-
+try:
+    BOT_USERNAME = getConfig('BOT_USERNAME')
+    if len(BOT_USERNAME) == 0:
+        BOT_USERNAME = ''
+except KeyError:
+    BOT_USERNAME = ''
+    
 search_lock = asyncio.Lock()
 search_info = {False: dict(), True: dict()}
 
@@ -152,8 +158,14 @@ async def nyaa_callback(client, callback_query):
 # Using Upstream API based on: https://github.com/Ryuk-me/Torrents-Api
 # Implemented by https://github.com/jusidama18
 
-TORRENT_API_URL_1 = "https://torrenter-api.herokuapp.com" # Link from Upstream APIs
-TORRENT_API_URL_2= "https://anishgowda.vercel.app" # Because this APIs has magnet support
+# Link from Upstream APIs
+TORRENT_API_URL_1 = ''
+try:
+    TORRENT_API_URL_1 = getConfig('TORRENT_API_URL')
+    if len(TORRENT_API_URL_1) == 0:
+        TORRENT_API_URL_1 = 'https://torrenter-api.herokuapp.com'
+except KeyError:
+    TORRENT_API_URL_1 = 'https://torrenter-api.herokuapp.com'
 
 class TorrentSearch:
     index = 0
@@ -177,9 +189,13 @@ class TorrentSearch:
 
     def get_formatted_string(self, values):
         string = self.RESULT_STR.format(**values)
-        magnet = values.get('magnet', values.get('Magnet'))  # Avoid updating source dict
         if (magnet):
-            string += f"**➲Magnet:** `{magnet.split('&tr', 1)[0]}`"
+            magnet = values.get('magnet', values.get('Magnet'))  # Avoid updating source dict
+                string += f"**➲Magnet:** `{magnet.split('&tr', 1)[0]}`"
+        else:
+            Down1 = values.get('dwnload1', values.get('Dwnload1'))  # Avoid updating source dict
+            Down2 = values.get('download2', values.get('Download2'))  # Avoid updating source dict
+                string += f"**➲First Link:** `{Down1.split('&tr', 1)[0]}`\n\n**➲Second Link:** `{Down2.split('&tr', 1)[0]}"
         return string
 
     async def update_message(self):
@@ -264,8 +280,9 @@ RESULT_STR_TGX = (
     "➲Torrent: `{TorrentLink}`\n"
 )
 RESULT_STR_YTS = (
-    "➲Name: `{name}`\n"
-    "➲Category: `{type}` `{quality}`\n"
+    "➲Name: `{Name}`\n"
+    "➲Genre: `{Genre}` `{quality}`\n"
+    "➲Duration: `{Runtime}`\n"
     "➲Seeders: `{seeds}` || ➲Leechers: `{peers}`\n"
     "➲Torrent: `{torrent_file}`\n"
 )
@@ -307,7 +324,7 @@ torrents_dict = {
     '1337x': {'source': f"{TORRENT_API_URL_1}/api/1337x/", 'result_str': RESULT_STR_1337},
     'piratebay': {'source': f"{TORRENT_API_URL_1}/api/piratebay/", 'result_str': RESULT_STR_PIRATEBAY},
     'tgx': {'source': f"{TORRENT_API_URL_1}/api/tgx/", 'result_str': RESULT_STR_TGX},
-    'yts': {'source': f"{TORRENT_API_URL_2}/yts?query=", 'result_str': RESULT_STR_YTS},
+    'yts': {'source': f"{TORRENT_API_URL_1}/api/yts/", 'result_str': RESULT_STR_YTS},
     'eztv': {'source': f"{TORRENT_API_URL_1}/api/eztv/", 'result_str': RESULT_STR_EZTV},
     'torlock': {'source': f"{TORRENT_API_URL_1}/api/torlock/", 'result_str': RESULT_STR_TORLOCK},
     'rarbg': {'source': f"{TORRENT_API_URL_1}/api/rarbg/", 'result_str': RESULT_STR_RARBG},

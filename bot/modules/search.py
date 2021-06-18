@@ -98,7 +98,7 @@ async def init_search(client, message, query, sukebei):
     if not result:
         await message.reply_text('No results found')
     else:
-        buttons = [InlineKeyboardButton(f'1/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'𝗡𝗲𝘅𝘁', 'nyaa_next')], [InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='delete_end')]
+        buttons = [InlineKeyboardButton(f'1/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'𝗡𝗲𝘅𝘁', 'nyaa_next')]
         if pages == 1:
             buttons.pop()
         reply = await message.reply_text(result, reply_markup=InlineKeyboardMarkup([
@@ -138,9 +138,9 @@ async def nyaa_callback(client, callback_query):
                 await callback_query.answer('...no', cache_time=3600)
                 return
             text, pages, ttl = await return_search(query, current_page, sukebei)
-        buttons = [InlineKeyboardButton(f'𝗣𝗿𝗲𝘃', 'nyaa_back'), InlineKeyboardButton(f'{current_page}/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'𝗡𝗲𝘅𝘁', 'nyaa_next')], [InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='delete_end')]
+        buttons = [InlineKeyboardButton(f'𝗣𝗿𝗲𝘃', 'nyaa_back'), InlineKeyboardButton(f'{current_page}/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'𝗡𝗲𝘅𝘁', 'nyaa_next')]
         if ttl_ended:
-            buttons = [InlineKeyboardButton('Search Expired', 'nyaa_nop'), InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='delete_end')]
+            buttons = [InlineKeyboardButton('Search Expired', 'nyaa_nop')]
         else:
             if current_page == 1:
                 buttons.pop(0)
@@ -195,7 +195,7 @@ class TorrentSearch:
         if (magnet):
             string += f"➲Magnet: `{magnet.split('&tr', 1)[0]}`"
         elif (down1) or (down2):
-            string += f"**➲First Link:** `{down1.split('mx', 1)[0]}`\n\n**➲Second Link:** `{down2.split('mx', 1)[0]}"
+            string += f"➲First Link: `{down1.split('', 1)[0]}`\n\n➲Second Link: `{down2.split('', 1)[0]}"
         return string
 
     async def update_message(self):

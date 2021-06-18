@@ -70,7 +70,7 @@ async def return_search(query, page=1, sukebei=False):
 message_info = dict()
 ignore = set()
 
-@app.on_message(filters.command(['nyaa', 'nyaasi']))
+@app.on_message(filters.command(['nyaa']))
 async def nyaa_search(client, message):
     text = message.text.split(' ')
     text.pop(0)
@@ -146,10 +146,11 @@ async def nyaa_callback(client, callback_query):
             ignore.add(message_identifier)
     await callback_query.answer()
 
-# Using upstream API based on: https://github.com/Ryuk-me/Torrents-Api
+# Using Upstream API based on: https://github.com/Ryuk-me/Torrents-Api
 # Implemented by https://github.com/jusidama18
 
-BASE_URL = "https://torrenter-api.herokuapp.com"
+TORRENT_API_URL_1 = "https://torrenter-api.herokuapp.com" # Link from Upstream APIs
+TORRENT_API_URL_2= "https://anishgowda.vercel.app" # Because this APIs has magnet support
 
 class TorrentSearch:
     index = 0
@@ -158,7 +159,7 @@ class TorrentSearch:
     response = None
     response_range = None
 
-    RESULT_LIMIT = 4
+    RESULT_LIMIT = 20
     RESULT_STR = None
 
     def __init__(self, command: str, source: str, result_str: str):
@@ -175,7 +176,7 @@ class TorrentSearch:
         string = self.RESULT_STR.format(**values)
         magnet = values.get('magnet', values.get('Magnet'))  # Avoid updating source dict
         if (magnet):
-            string += f"➲Magnet: `{magnet.split('&tr', 1)[0]}`"
+            string += f"**➲Magnet:** `{magnet.split('&tr', 1)[0]}`"
         return string
 
     async def update_message(self):
@@ -230,7 +231,7 @@ class TorrentSearch:
         message = None
         response = None
         response_range = None
-        await message.delete()
+        await self.message.delete()
 
     async def previous(self, client, message):
         self.index -= 1
@@ -242,23 +243,29 @@ class TorrentSearch:
 
 RESULT_STR_1337 = (
     "➲Name: `{Name}`\n"
+    "➲Category: `{Category}`\n"
     "➲Size: {Size}\n"
     "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
 )
 RESULT_STR_PIRATEBAY = (
     "➲Name: `{Name}`\n"
+    "➲Category: `{Category}`\n"
     "➲Size: {Size}\n"
     "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
 )
 RESULT_STR_TGX = (
     "➲Name: `{Name}`\n" 
+    "➲Category: `{Category}`\n"
     "➲Size: {Size}\n"
     "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
+    "➲Torrent: `{TorrentLink}`\n"
 )
 RESULT_STR_YTS = (
     "➲Name: `{Name}`\n"
-    "➲1st Link: `{Dwnload1}`\n"
-    "➲2nd Link: `{Download2}`"
+    "➲Category: `{type} {quality}`\n"
+    "➲Genre: `{Genre}`\n"
+    "➲Seeders: {seeds} || ➲Leechers: {peers}\n"
+    "➲Torrent: `{torrent_file}`\n"
 )
 RESULT_STR_EZTV = (
     "➲Name: `{Name}`\n"
@@ -268,30 +275,42 @@ RESULT_STR_EZTV = (
 )
 RESULT_STR_TORLOCK = (
     "➲Name: `{Name}`\n"
+    "➲Category: `{Category}`\n"
     "➲Size: {Size}\n"
     "➲Seeders: {Seeds} || ➲Leechers: {Peers}\n"
     "➲Torrent: `{Torrent}`\n"
 )
 RESULT_STR_RARBG = (
     "➲Name: `{Name}`\n"
+    "➲Category: `{Category}`\n"
     "➲Size: {Size}\n"
     "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
 )
+RESULT_STR_NYAASI = (
+    "➲Name: `{Name}`\n"
+    "➲Category: `{Category}`\n"
+    "➲Size: {Size}\n"
+    "➲Seeders: {Seeder} || ➲Leechers: {Leecher}\n"
+    "➲Torrent: `{TorrentLink}`\n"
+
+)
 RESULT_STR_ALL = (
     "➲Name: `{Name}`\n"
+    "➲Category: `{Category}`\n"
     "➲Size: {Size}\n"
     "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
 )
 
 torrents_dict = {
-    '1337x': {'source': f"{BASE_URL}/api/1337x/", 'result_str': RESULT_STR_1337},
-    'piratebay': {'source': f"{BASE_URL}/api/piratebay/", 'result_str': RESULT_STR_PIRATEBAY},
-    'tgx': {'source': f"{BASE_URL}/api/tgx/", 'result_str': RESULT_STR_TGX},
-    'yts': {'source': f"{BASE_URL}/api/yts/", 'result_str': RESULT_STR_YTS},
-    'eztv': {'source': f"{BASE_URL}/api/eztv/", 'result_str': RESULT_STR_EZTV},
-    'torlock': {'source': f"{BASE_URL}/api/torlock/", 'result_str': RESULT_STR_TORLOCK},
-    'rarbg': {'source': f"{BASE_URL}/api/rarbg/", 'result_str': RESULT_STR_RARBG},
-    'ts': {'source': f"{BASE_URL}/api/all/", 'result_str': RESULT_STR_ALL}
+    '1337x': {'source': f"{TORRENT_API_URL_1}/api/1337x/", 'result_str': RESULT_STR_1337},
+    'piratebay': {'source': f"{TORRENT_API_URL_1}/api/piratebay/", 'result_str': RESULT_STR_PIRATEBAY},
+    'tgx': {'source': f"{TORRENT_API_URL_1}/api/tgx/", 'result_str': RESULT_STR_TGX},
+    'yts': {'source': f"{TORRENT_API_URL_2}/yts?query=", 'result_str': RESULT_STR_YTS},
+    'eztv': {'source': f"{TORRENT_API_URL_1}/api/eztv/", 'result_str': RESULT_STR_EZTV},
+    'torlock': {'source': f"{TORRENT_API_URL_1}/api/torlock/", 'result_str': RESULT_STR_TORLOCK},
+    'rarbg': {'source': f"{TORRENT_API_URL_1}/api/rarbg/", 'result_str': RESULT_STR_RARBG},
+    'nyaasi': {'source': f"{TORRENT_API_URL_1}/api/rarbg/", 'result_str': RESULT_STR_RARBG}, # For Alternative Search For Nyaa.si
+    'ts': {'source': f"{TORRENT_API_URL_1}/api/all/", 'result_str': RESULT_STR_ALL}
 }
 
 torrent_handlers = []
@@ -300,8 +319,13 @@ for command, value in torrents_dict.items():
 
 def searchhelp(update, context):
     help_string = '''
+[  NYAASI RSS  ]
+
 • /nyaa <i>[search query]</i>
 • /sukebei <i>[search query]</i>
+
+[ TORRENT APIs ]
+
 • /1337x <i>[search query]</i>
 • /piratebay <i>[search query]</i>
 • /tgx <i>[search query]</i>
@@ -309,6 +333,7 @@ def searchhelp(update, context):
 • /eztv <i>[search query]</i>
 • /torlock <i>[search query]</i>
 • /rarbg <i>[search query]</i>
+• /nyaasi <i>[search query]</i>
 • /ts <i>[search query]</i>
 '''
     update.effective_message.reply_photo(IMAGE_URL, help_string, parse_mode=ParseMode.HTML)

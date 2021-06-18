@@ -54,10 +54,10 @@ __header__='📕 **Page** **{}**\n\n'
 @app.on_message(filters.command(BotCommands.ConfigMenuCommand) & filters.user(OWNER_ID))
 async def config_menu(_, message):
     await message.reply(
-        f"**Hello {message.from_user.mention}**,\n\n**If you want to add or set Variable in Heroku use** `/setvar`\n\n**If you want to delete Variable in Heroku use `/delvar`**\n\n**If you want to Update Bot with [Upstream Repo]({UPSTREAM_REPO}) use `/{BotCommands.UpdateCommand}`**\n\n**WARNING! Very Recommended to do this command in private since it's contain bot info.**\n\n**Here's This is Slam-MirrorBot Current Configs**\n\n\n",
+        f"**Hello {message.from_user.mention}**,\n\n**If you want to add or set Variable in Heroku use** `/setvar`\n\n**If you want to delete Variable in Heroku use `/delvar`**\n\n**If you want to Update Bot with Upstream Repo use `/{BotCommands.UpdateCommand}`**\n\n**WARNING! Very Recommended to do this command in private since it's contain bot info.**\n\n**Here's This is Slam-MirrorBot Current Configs**\n\n\n",
         reply_markup=types.InlineKeyboardMarkup(
             [[types.InlineKeyboardButton("Var Name", url="https://github.com/breakdowns/slam-mirrorbot#setting-up-config-file"),types.InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='docs_end'), types.InlineKeyboardButton(f"BOT CONFIG", callback_data='docs_1')]]
-        ), parse_mode="markdown",
+        )
     )
 
 @app.on_callback_query(filters.regex('^docs_') & filters.user(OWNER_ID))

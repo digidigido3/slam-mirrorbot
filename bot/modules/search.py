@@ -21,6 +21,8 @@ from bot import app, dispatcher, IMAGE_URL
 from bot.helper import custom_filters
 from bot.helper.telegram_helper.filters import CustomFilters
 
+BOT_USERNAME = '@MegaNzDLBot'
+
 search_lock = asyncio.Lock()
 search_info = {False: dict(), True: dict()}
 
@@ -70,14 +72,14 @@ async def return_search(query, page=1, sukebei=False):
 message_info = dict()
 ignore = set()
 
-@app.on_message(filters.command(['nyaa']))
+@app.on_message(filters.command(['nyaa', f'nyaa{BOT_USERNAME}']))
 async def nyaa_search(client, message):
     text = message.text.split(' ')
     text.pop(0)
     query = ' '.join(text)
     await init_search(client, message, query, False)
 
-@app.on_message(filters.command(['sukebei']))
+@app.on_message(filters.command(['sukebei', f'sukebei{BOT_USERNAME}']))
 async def nyaa_search_sukebei(client, message):
     text = message.text.split(' ')
     text.pop(0)
@@ -152,8 +154,6 @@ async def nyaa_callback(client, callback_query):
 TORRENT_API_URL_1 = "https://torrenter-api.herokuapp.com" # Link from Upstream APIs
 TORRENT_API_URL_2= "https://anishgowda.vercel.app" # Because this APIs has magnet support
 
-BOT_USERNAME = '@MegaNzDLBot'
-
 class TorrentSearch:
     index = 0
     query = None
@@ -161,7 +161,7 @@ class TorrentSearch:
     response = None
     response_range = None
 
-    RESULT_LIMIT = 10
+    RESULT_LIMIT = 5
     RESULT_STR = None
 
     def __init__(self, command: str, source: str, result_str: str):
@@ -323,12 +323,12 @@ def searchhelp(update, context):
     help_string = '''
 <b>Example Usage:</b> <code>/nyaa naruto</code>
 
-[  NYAASI RSS  ]
+<b>[  NYAASI RSS  ]</b>
 
 • /nyaa <i>[search query]</i>
 • /sukebei <i>[search query]</i>
 
-[ TORRENT APIs ]
+<b>[ TORRENT APIs ]</b>
 
 • /1337x <i>[search query]</i>
 • /piratebay <i>[search query]</i>

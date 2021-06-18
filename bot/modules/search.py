@@ -263,9 +263,8 @@ RESULT_STR_TGX = (
     "➲Torrent: `{TorrentLink}`\n"
 )
 RESULT_STR_YTS = (
-    "➲Name: `{Name}`\n"
+    "➲Name: `{name}`\n"
     "➲Category: `{type}` `{quality}`\n"
-    "➲Genre: `{Genre}`\n"
     "➲Seeders: `{seeds}` || ➲Leechers: `{peers}`\n"
     "➲Torrent: `{torrent_file}`\n"
 )
@@ -319,7 +318,8 @@ torrent_handlers = []
 for command, value in torrents_dict.items():
     torrent_handlers.append(TorrentSearch(command, value['source'], value['result_str']))
 
-def searchhelp(update, context):
+@app.on_message(filters.command(['tshelp', f'tshelp{BOT_USERNAME}']))
+def searchhelp(client, message):
     help_string = '''
 <b>Example Usage:</b> <code>/nyaa naruto</code>
 
@@ -340,8 +340,8 @@ def searchhelp(update, context):
 • /nyaasi <i>[search query]</i>
 • /ts <i>[search query]</i>
 '''
-    update.effective_message.reply_photo(IMAGE_URL, help_string, parse_mode=ParseMode.HTML)
+    message.reply_photo(IMAGE_URL, help_string, parse_mode="markdown")
     
     
-SEARCHHELP_HANDLER = CommandHandler("tshelp", searchhelp, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-dispatcher.add_handler(SEARCHHELP_HANDLER)
+#SEARCHHELP_HANDLER = CommandHandler("tshelp", searchhelp, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
+#dispatcher.add_handler(SEARCHHELP_HANDLER)

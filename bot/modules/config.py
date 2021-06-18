@@ -73,6 +73,9 @@ async def config_button(_, query):
                         types.InlineKeyboardButton(f"{emoji.LEFT_ARROW}", callback_data='docs_10'),
                         types.InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='docs_end'),
                         types.InlineKeyboardButton(f"{emoji.RIGHT_ARROW}", callback_data='docs_2')
+                    ],
+                    [
+                        types.InlineKeyboardButton("VAR NAME", url="https://github.com/breakdowns/slam-mirrorbot#setting-up-config-file")
                     ]
                 ]
             )
@@ -87,6 +90,9 @@ async def config_button(_, query):
                         types.InlineKeyboardButton(f"{emoji.LEFT_ARROW}", callback_data='docs_1'),
                         types.InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='docs_end'),
                         types.InlineKeyboardButton(f"{emoji.RIGHT_ARROW}", callback_data='docs_3')
+                    ],
+                    [
+                        types.InlineKeyboardButton("VAR NAME", url="https://github.com/breakdowns/slam-mirrorbot#setting-up-config-file")
                     ]
                 ]
             )
@@ -101,6 +107,9 @@ async def config_button(_, query):
                         types.InlineKeyboardButton(f"{emoji.LEFT_ARROW}", callback_data='docs_2'),
                         types.InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='docs_end'),
                         types.InlineKeyboardButton(f"{emoji.RIGHT_ARROW}", callback_data='docs_4')
+                    ],
+                    [
+                        types.InlineKeyboardButton("VAR NAME", url="https://github.com/breakdowns/slam-mirrorbot#setting-up-config-file")
                     ]
                 ]
             )
@@ -115,6 +124,9 @@ async def config_button(_, query):
                         types.InlineKeyboardButton(f"{emoji.LEFT_ARROW}", callback_data='docs_3'),
                         types.InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='docs_end'),
                         types.InlineKeyboardButton(f"{emoji.RIGHT_ARROW}", callback_data='docs_5')
+                    ],
+                    [
+                        types.InlineKeyboardButton("VAR NAME", url="https://github.com/breakdowns/slam-mirrorbot#setting-up-config-file")
                     ]
                 ]
             )
@@ -129,6 +141,9 @@ async def config_button(_, query):
                         types.InlineKeyboardButton(f"{emoji.LEFT_ARROW}", callback_data='docs_4'),
                         types.InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='docs_end'),
                         types.InlineKeyboardButton(f"{emoji.RIGHT_ARROW}", callback_data='docs_6')
+                    ],
+                    [
+                        types.InlineKeyboardButton("VAR NAME", url="https://github.com/breakdowns/slam-mirrorbot#setting-up-config-file")
                     ]
                 ]
             )
@@ -146,6 +161,9 @@ async def config_button(_, query):
                         types.InlineKeyboardButton(f"{emoji.LEFT_ARROW}", callback_data='docs_5'),
                         types.InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='docs_end'),
                         types.InlineKeyboardButton(f"{emoji.RIGHT_ARROW}", callback_data='docs_7')
+                    ],
+                    [
+                        types.InlineKeyboardButton("VAR NAME", url="https://github.com/breakdowns/slam-mirrorbot#setting-up-config-file")
                     ]
                 ]
             )
@@ -160,6 +178,9 @@ async def config_button(_, query):
                         types.InlineKeyboardButton(f"{emoji.LEFT_ARROW}", callback_data='docs_6'),
                         types.InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='docs_end'),
                         types.InlineKeyboardButton(f"{emoji.RIGHT_ARROW}", callback_data='docs_8')
+                    ],
+                    [
+                        types.InlineKeyboardButton("VAR NAME", url="https://github.com/breakdowns/slam-mirrorbot#setting-up-config-file")
                     ]
                 ]
             )
@@ -174,6 +195,9 @@ async def config_button(_, query):
                         types.InlineKeyboardButton(f"{emoji.LEFT_ARROW}", callback_data='docs_7'),
                         types.InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='docs_end'),
                         types.InlineKeyboardButton(f"{emoji.RIGHT_ARROW}", callback_data='docs_9')
+                    ],
+                    [
+                        types.InlineKeyboardButton("VAR NAME", url="https://github.com/breakdowns/slam-mirrorbot#setting-up-config-file")
                     ]
                 ]
             )
@@ -188,6 +212,9 @@ async def config_button(_, query):
                         types.InlineKeyboardButton(f"{emoji.LEFT_ARROW}", callback_data='docs_8'),
                         types.InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='docs_end'),
                         types.InlineKeyboardButton(f"{emoji.RIGHT_ARROW}", callback_data='docs_10')
+                    ],
+                    [
+                        types.InlineKeyboardButton("VAR NAME", url="https://github.com/breakdowns/slam-mirrorbot#setting-up-config-file")
                     ]
                 ]
             )
@@ -202,6 +229,9 @@ async def config_button(_, query):
                         types.InlineKeyboardButton(f"{emoji.LEFT_ARROW}", callback_data='docs_9'),
                         types.InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='docs_end'),
                         types.InlineKeyboardButton(f"{emoji.RIGHT_ARROW}", callback_data='docs_1')
+                    ],
+                    [
+                        types.InlineKeyboardButton("VAR NAME", url="https://github.com/breakdowns/slam-mirrorbot#setting-up-config-file")
                     ]
                 ]
             )

@@ -302,20 +302,22 @@ RESULT_STR_ALL = (
 )
 
 torrents_dict = {
-    ['1337x']: {'source': f"{TORRENT_API_URL_1}/api/1337x/", 'result_str': RESULT_STR_1337},
-    ['piratebay', 'pb']: {'source': f"{TORRENT_API_URL_1}/api/piratebay/", 'result_str': RESULT_STR_PIRATEBAY},
-    ['tgx']: {'source': f"{TORRENT_API_URL_1}/api/tgx/", 'result_str': RESULT_STR_TGX},
-    ['yts']: {'source': f"{TORRENT_API_URL_2}/yts?query=", 'result_str': RESULT_STR_YTS},
-    ['eztv']: {'source': f"{TORRENT_API_URL_1}/api/eztv/", 'result_str': RESULT_STR_EZTV},
-    ['torlock']: {'source': f"{TORRENT_API_URL_1}/api/torlock/", 'result_str': RESULT_STR_TORLOCK},
-    ['rarbg']: {'source': f"{TORRENT_API_URL_1}/api/rarbg/", 'result_str': RESULT_STR_RARBG},
-    ['nyaasi']: {'source': f"{TORRENT_API_URL_1}/api/rarbg/", 'result_str': RESULT_STR_RARBG}, # For Alternative Search For Nyaa.si
-    ['ts']: {'source': f"{TORRENT_API_URL_1}/api/all/", 'result_str': RESULT_STR_ALL}
+    '1337x': {'source': f"{TORRENT_API_URL_1}/api/1337x/", 'result_str': RESULT_STR_1337},
+    'piratebay', 'pb': {'source': f"{TORRENT_API_URL_1}/api/piratebay/", 'result_str': RESULT_STR_PIRATEBAY},
+    'tgx': {'source': f"{TORRENT_API_URL_1}/api/tgx/", 'result_str': RESULT_STR_TGX},
+    'yts': {'source': f"{TORRENT_API_URL_2}/yts?query=", 'result_str': RESULT_STR_YTS},
+    'eztv': {'source': f"{TORRENT_API_URL_1}/api/eztv/", 'result_str': RESULT_STR_EZTV},
+    'torlock': {'source': f"{TORRENT_API_URL_1}/api/torlock/", 'result_str': RESULT_STR_TORLOCK},
+    'rarbg': {'source': f"{TORRENT_API_URL_1}/api/rarbg/", 'result_str': RESULT_STR_RARBG},
+    'nyaasi': {'source': f"{TORRENT_API_URL_1}/api/rarbg/", 'result_str': RESULT_STR_RARBG}, # For Alternative Search For Nyaa.si
+    'ts': {'source': f"{TORRENT_API_URL_1}/api/all/", 'result_str': RESULT_STR_ALL}
 }
+
+cmd = f'{command}@BotUsername'
 
 torrent_handlers = []
 for command, value in torrents_dict.items():
-    torrent_handlers.append(TorrentSearch(command, value['source'], value['result_str']))
+    torrent_handlers.append(TorrentSearch([command, cmd], value['source'], value['result_str']))
 
 def searchhelp(update, context):
     help_string = '''

@@ -21,7 +21,6 @@ from bot import app, dispatcher, IMAGE_URL
 from bot.helper import custom_filters
 from bot.helper.telegram_helper.filters import CustomFilters
 
-session = aiohttp.ClientSession()
 search_lock = asyncio.Lock()
 search_info = {False: dict(), True: dict()}
 
@@ -33,8 +32,9 @@ async def return_search(query, page=1, sukebei=False):
         results, get_time = used_search_info.get(query, (None, 0))
         if (time.time() - get_time) > 3600:
             results = []
-            async with session.get(f'https://{"sukebei." if sukebei else ""}nyaa.si/?page=rss&q={urlencode(query)}') as resp:
-                d = feedparser.parse(await resp.text())
+            async with aiohttp.ClientSession() as session:
+                async with session.get(f'https://{"sukebei." if sukebei else ""}nyaa.si/?page=rss&q={urlencode(query)}') as resp:
+                    d = feedparser.parse(await resp.text())
             text = ''
             a = 0
             parser = pyrogram_html.HTML(None)
@@ -189,7 +189,7 @@ class TorrentSearch:
             inline.append(nextBtn)
 
         result = f"**Page - {self.index+1}**\n\n"
-        result += "\n\n=======================\n\n".join(
+        result += "\n\n═════════════════════════\n\n".join(
             self.get_formatted_string(self.response[self.response_range[self.index]+i])
             for i in range(self.RESULT_LIMIT)
         )
@@ -217,7 +217,7 @@ class TorrentSearch:
             await self.message.edit(f"No Results Found.")
             return
         await self.update_message()
-        session.close()
+        await session.close()
 
     async def delete(self, client, message):
         index = 0

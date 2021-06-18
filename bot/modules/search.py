@@ -337,7 +337,7 @@ for command, value in torrents_dict.items():
 
 T_HELP = ['tshelp', 'find', 'ts']
 
-@app.on_message(filters.command(T_HELP, T_HELP{BOT_USERNAME}))
+@app.on_message(filters.command(T_HELP, f'{T_HELP}{BOT_USERNAME}'))
 def searchhelp(client, message):
     help_string = '''
 <b>Example Usage:</b> <code>/nyaa naruto</code>

@@ -346,7 +346,7 @@ def searchhelp(client, message):
     help_string = '''
 <b>Example Usage:</b> <code>/nyaa naruto</code>
 
-<b>[  NYAASI RSS  ]</b>
+<b>[  NYAA.SI RSS  ]</b>
 
 • /nyaa <i>[search query]</i>
 • /sukebei <i>[search query]</i>
@@ -363,8 +363,13 @@ def searchhelp(client, message):
 • /nyaasi <i>[search query]</i>
 • /ts <i>[search query]</i>
 '''
-    message.reply_photo(photo=IMAGE_URL, caption=help_string, parse_mode="html")
-    
+    message.reply_photo(photo=IMAGE_URL, caption=help_string, parse_mode="html", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='delete_end')]]))
+
+@app.on_callback_query(filters.regex('^delete_'))
+async def delete_button(_, query):
+    data = query.data.split('_')[1]
+    if data == 'end':
+        return await query.message.delete()
     
 #SEARCHHELP_HANDLER = CommandHandler("tshelp", searchhelp, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
 #dispatcher.add_handler(SEARCHHELP_HANDLER)

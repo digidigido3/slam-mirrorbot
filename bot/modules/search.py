@@ -21,7 +21,7 @@ from bot import app, dispatcher, IMAGE_URL
 from bot.helper import custom_filters
 from bot.helper.telegram_helper.filters import CustomFilters
 
-BOT_USERNAME = '@MegaNzDLBot'
+BOT_USERNAME = ''
 
 search_lock = asyncio.Lock()
 search_info = {False: dict(), True: dict()}
@@ -91,7 +91,7 @@ async def init_search(client, message, query, sukebei):
     if not result:
         await message.reply_text('No results found')
     else:
-        buttons = [InlineKeyboardButton(f'1/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'Next', 'nyaa_next')]
+        buttons = [InlineKeyboardButton(f'1/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'𝗡𝗲𝘅𝘁', 'nyaa_next')]
         if pages == 1:
             buttons.pop()
         reply = await message.reply_text(result, reply_markup=InlineKeyboardMarkup([
@@ -131,7 +131,7 @@ async def nyaa_callback(client, callback_query):
                 await callback_query.answer('...no', cache_time=3600)
                 return
             text, pages, ttl = await return_search(query, current_page, sukebei)
-        buttons = [InlineKeyboardButton(f'Prev', 'nyaa_back'), InlineKeyboardButton(f'{current_page}/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'Next', 'nyaa_next')]
+        buttons = [InlineKeyboardButton(f'𝗣𝗿𝗲𝘃', 'nyaa_back'), InlineKeyboardButton(f'{current_page}/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'𝗡𝗲𝘅𝘁', 'nyaa_next')]
         if ttl_ended:
             buttons = [InlineKeyboardButton('Search Expired', 'nyaa_nop')]
         else:
@@ -182,9 +182,9 @@ class TorrentSearch:
         return string
 
     async def update_message(self):
-        prevBtn = InlineKeyboardButton(f"Prev", callback_data=f"{self.command}_previous")
+        prevBtn = InlineKeyboardButton(f"𝗣𝗿𝗲𝘃", callback_data=f"{self.command}_previous")
         delBtn = InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data="delete")
-        nextBtn = InlineKeyboardButton(f"Next", callback_data=f"{self.command}_next")
+        nextBtn = InlineKeyboardButton(f"𝗡𝗲𝘅𝘁", callback_data=f"{self.command}_next")
 
         inline = []
         if (self.index != 0):
@@ -193,8 +193,8 @@ class TorrentSearch:
         if (self.index != len(self.response_range) - 1):
             inline.append(nextBtn)
 
-        result = f"**Page - {self.index+1}**\n\n"
-        result += "\n\n═════════════════════════\n\n".join(
+        result = f"**📕 Page - {self.index+1}**\n\n"
+        result += "\n\n════════════ 𝙏𝙊𝙍𝙍𝙀𝙉𝙏 ═════════════\n\n".join(
             self.get_formatted_string(self.response[self.response_range[self.index]+i])
             for i in range(self.RESULT_LIMIT)
         )

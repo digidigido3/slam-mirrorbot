@@ -210,22 +210,26 @@ class TorrentSearch:
         query = urlencode(message.text.split(None, 1)[1])
         self.message = await message.reply_text("Searching")
         try:
-            async with session.get(f"{self.source}/{query}") \
-                as resp:
-                    self.response = await resp.json(content_type=None)
+            async with aiohttp.ClientSession() as session:
+                async with session.get(f"{self.source}/{query}") as resp:
+                    if (resp.status != 200):
+                        raise Exception('unsuccessful request')
+                    result = await resp.json()
+                    if (result and isinstance(result[0], list)):
+                        result = list(itertools.chain(*result))
+                    self.response = result
                     self.response_range = range(0, len(self.response), self.RESULT_LIMIT)
-        except Exception as exc:
-            await self.message.edit(f"No Results Found.")
+        except:
+            await self.message.edit("No Results Found.")
             return
         await self.update_message()
-        await session.close()
 
     async def delete(self, client, message):
         index = 0
         query = None
+        message = None
         response = None
         response_range = None
-        message = None
         await message.delete()
 
     async def previous(self, client, message):
@@ -253,20 +257,20 @@ RESULT_STR_TGX = (
 )
 RESULT_STR_YTS = (
     "➲Name: `{Name}`\n"
-    "➲Size: {Size}\n"
-    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
     "➲1st Link: `{Dwnload1}`\n"
     "➲2nd Link: `{Download2}`"
 )
 RESULT_STR_EZTV = (
     "➲Name: `{Name}`\n"
     "➲Size: {Size}\n"
-    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
+    "➲Seeders: {Seeds}\n"
+    "➲Torrent: `{Torrent}`\n"
 )
 RESULT_STR_TORLOCK = (
     "➲Name: `{Name}`\n"
     "➲Size: {Size}\n"
-    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
+    "➲Seeders: {Seeds} || ➲Leechers: {Peers}\n"
+    "➲Torrent: `{Torrent}`\n"
 )
 RESULT_STR_RARBG = (
     "➲Name: `{Name}`\n"

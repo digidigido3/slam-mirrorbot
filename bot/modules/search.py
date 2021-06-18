@@ -149,6 +149,8 @@ async def nyaa_callback(client, callback_query):
 # Using upstream API based on: https://github.com/Ryuk-me/Torrents-Api
 # Implemented by https://github.com/jusidama18
 
+BASE_URL = "https://torrenter-api.herokuapp.com"
+
 class TorrentSearch:
     index = 0
     query = None
@@ -277,14 +279,14 @@ RESULT_STR_ALL = (
 )
 
 torrents_dict = {
-    '1337x': {'source': "https://torrenter-api.herokuapp.com/api/1337x/", 'result_str': RESULT_STR_1337},
-    'piratebay': {'source': "https://torrenter-api.herokuapp.com/api/piratebay/", 'result_str': RESULT_STR_PIRATEBAY},
-    'tgx': {'source': "https://torrenter-api.herokuapp.com/api/tgx/", 'result_str': RESULT_STR_TGX},
-    'yts': {'source': "https://torrenter-api.herokuapp.com/api/yts/", 'result_str': RESULT_STR_YTS},
-    'eztv': {'source': "https://torrenter-api.herokuapp.com/api/eztv/", 'result_str': RESULT_STR_EZTV},
-    'torlock': {'source': "https://torrenter-api.herokuapp.com/api/torlock/", 'result_str': RESULT_STR_TORLOCK},
-    'rarbg': {'source': "https://torrenter-api.herokuapp.com/api/rarbg/", 'result_str': RESULT_STR_RARBG},
-    'ts': {'source': "https://torrenter-api.herokuapp.com/api/all/", 'result_str': RESULT_STR_ALL}
+    '1337x': {'source': f"{BASE_URL}/api/1337x/", 'result_str': RESULT_STR_1337},
+    'piratebay': {'source': f"{BASE_URL}/api/piratebay/", 'result_str': RESULT_STR_PIRATEBAY},
+    'tgx': {'source': f"{BASE_URL}/api/tgx/", 'result_str': RESULT_STR_TGX},
+    'yts': {'source': f"{BASE_URL}/api/yts/", 'result_str': RESULT_STR_YTS},
+    'eztv': {'source': f"{BASE_URL}/api/eztv/", 'result_str': RESULT_STR_EZTV},
+    'torlock': {'source': f"{BASE_URL}/api/torlock/", 'result_str': RESULT_STR_TORLOCK},
+    'rarbg': {'source': f"{BASE_URL}/api/rarbg/", 'result_str': RESULT_STR_RARBG},
+    'ts': {'source': f"{BASE_URL}/api/all/", 'result_str': RESULT_STR_ALL}
 }
 
 torrent_handlers = []

@@ -340,7 +340,7 @@ def searchhelp(client, message):
 • /nyaasi <i>[search query]</i>
 • /ts <i>[search query]</i>
 '''
-    message.reply_photo(IMAGE_URL, help_string, parse_mode="markdown")
+    message.reply_photo(IMAGE_URL, help_string, parse_mode="html")
     
     
 #SEARCHHELP_HANDLER = CommandHandler("tshelp", searchhelp, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)

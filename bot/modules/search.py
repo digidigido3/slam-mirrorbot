@@ -159,13 +159,13 @@ async def nyaa_callback(client, callback_query):
 # Implemented by https://github.com/jusidama18
 
 # Link from Upstream APIs
-TORRENT_API_URL_1 = ''
+TORRENT_API_URL = ''
 try:
-    TORRENT_API_URL_1 = getConfig('TORRENT_API_URL')
-    if len(TORRENT_API_URL_1) == 0:
-        TORRENT_API_URL_1 = 'https://torrenter-api.herokuapp.com'
+    TORRENT_API_URL = getConfig('TORRENT_API_URL')
+    if len(TORRENT_API_URL) == 0:
+        TORRENT_API_URL = 'https://torrenter-api.herokuapp.com'
 except KeyError:
-    TORRENT_API_URL_1 = 'https://torrenter-api.herokuapp.com'
+    TORRENT_API_URL = 'https://torrenter-api.herokuapp.com'
 
 class TorrentSearch:
     index = 0
@@ -281,10 +281,9 @@ RESULT_STR_TGX = (
 )
 RESULT_STR_YTS = (
     "➲Name: `{Name}`\n"
-    "➲Genre: `{Genre}` `{quality}`\n"
+    "➲Genre: `{Genre}` || ➲Rating: `{Rating}`\n"
     "➲Duration: `{Runtime}`\n"
-    "➲Seeders: `{seeds}` || ➲Leechers: `{peers}`\n"
-    "➲Torrent: `{torrent_file}`\n"
+    "➲Released Date: `{ReleasedDate}`\n"
 )
 RESULT_STR_EZTV = (
     "➲Name: `{Name}`\n"
@@ -323,13 +322,13 @@ RESULT_STR_ALL = (
 torrents_dict = {
     '1337x': {'source': f"{TORRENT_API_URL_1}/api/1337x/", 'result_str': RESULT_STR_1337},
     'piratebay': {'source': f"{TORRENT_API_URL_1}/api/piratebay/", 'result_str': RESULT_STR_PIRATEBAY},
-    'tgx': {'source': f"{TORRENT_API_URL_1}/api/tgx/", 'result_str': RESULT_STR_TGX},
-    'yts': {'source': f"{TORRENT_API_URL_1}/api/yts/", 'result_str': RESULT_STR_YTS},
-    'eztv': {'source': f"{TORRENT_API_URL_1}/api/eztv/", 'result_str': RESULT_STR_EZTV},
-    'torlock': {'source': f"{TORRENT_API_URL_1}/api/torlock/", 'result_str': RESULT_STR_TORLOCK},
-    'rarbg': {'source': f"{TORRENT_API_URL_1}/api/rarbg/", 'result_str': RESULT_STR_RARBG},
-    'nyaasi': {'source': f"{TORRENT_API_URL_1}/api/rarbg/", 'result_str': RESULT_STR_RARBG}, # For Alternative Search For Nyaa.si
-    'ts': {'source': f"{TORRENT_API_URL_1}/api/all/", 'result_str': RESULT_STR_ALL}
+    'tgx': {'source': f"{TORRENT_API_URL}/api/tgx/", 'result_str': RESULT_STR_TGX},
+    'yts': {'source': f"{TORRENT_API_URL}/api/yts/", 'result_str': RESULT_STR_YTS},
+    'eztv': {'source': f"{TORRENT_API_URL}/api/eztv/", 'result_str': RESULT_STR_EZTV},
+    'torlock': {'source': f"{TORRENT_API_URL}/api/torlock/", 'result_str': RESULT_STR_TORLOCK},
+    'rarbg': {'source': f"{TORRENT_API_URL}/api/rarbg/", 'result_str': RESULT_STR_RARBG},
+    'nyaasi': {'source': f"{TORRENT_API_URL}/api/rarbg/", 'result_str': RESULT_STR_RARBG}, # For Alternative Search For Nyaa.si
+    'ts': {'source': f"{TORRENT_API_URL}/api/all/", 'result_str': RESULT_STR_ALL}
 }
 
 torrent_handlers = []

@@ -17,7 +17,7 @@ from pyrogram.parser import html as pyrogram_html
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.handlers import MessageHandler, CallbackQueryHandler
 
-from bot import app, IMAGE_URL, AUTHORIZED_CHATS, OWNER_ID, SUDO_USERS
+from bot import app, IMAGE_URL, AUTHORIZED_CHATS, OWNER_ID
 #from bot import dispatcher 
 from bot.helper import custom_filters
 from bot.helper.telegram_helper.filters import CustomFilters

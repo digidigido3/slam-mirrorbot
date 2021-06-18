@@ -22,7 +22,6 @@ from bot import app, IMAGE_URL, AUTHORIZED_CHATS, OWNER_ID, getConfig
 from bot.helper import custom_filters
 from bot.helper.telegram_helper.filters import CustomFilters
 
-BOT_USERNAME = ''
 try:
     BOT_USERNAME = getConfig('BOT_USERNAME')
     if len(BOT_USERNAME) == 0:
@@ -79,14 +78,14 @@ async def return_search(query, page=1, sukebei=False):
 message_info = dict()
 ignore = set()
 
-@app.on_message(filters.command(['nyaa', f'nyaa{BOT_USERNAME}']))
+@app.on_message(filters.command(['nyaa']))
 async def nyaa_search(client, message):
     text = message.text.split(' ')
     text.pop(0)
     query = ' '.join(text)
     await init_search(client, message, query, False)
 
-@app.on_message(filters.command(['sukebei', f'sukebei{BOT_USERNAME}']))
+@app.on_message(filters.command(['sukebei']))
 async def nyaa_search_sukebei(client, message):
     text = message.text.split(' ')
     text.pop(0)
@@ -98,7 +97,7 @@ async def init_search(client, message, query, sukebei):
     if not result:
         await message.reply_text('No results found')
     else:
-        buttons = [InlineKeyboardButton(f'1/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'𝗡𝗲𝘅𝘁', 'nyaa_next')]
+        buttons = [InlineKeyboardButton(f'1/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'Next', 'nyaa_next')]
         if pages == 1:
             buttons.pop()
         reply = await message.reply_text(result, reply_markup=InlineKeyboardMarkup([
@@ -138,7 +137,7 @@ async def nyaa_callback(client, callback_query):
                 await callback_query.answer('...no', cache_time=3600)
                 return
             text, pages, ttl = await return_search(query, current_page, sukebei)
-        buttons = [InlineKeyboardButton(f'𝗣𝗿𝗲𝘃', 'nyaa_back'), InlineKeyboardButton(f'{current_page}/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'𝗡𝗲𝘅𝘁', 'nyaa_next')]
+        buttons = [InlineKeyboardButton(f'Prev', 'nyaa_back'), InlineKeyboardButton(f'{current_page}/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'Next', 'nyaa_next')]
         if ttl_ended:
             buttons = [InlineKeyboardButton('Search Expired', 'nyaa_nop')]
         else:
@@ -159,7 +158,6 @@ async def nyaa_callback(client, callback_query):
 # Implemented by https://github.com/jusidama18
 
 # Link from Upstream APIs
-TORRENT_API_URL = ''
 try:
     TORRENT_API_URL = getConfig('TORRENT_API_URL')
     if len(TORRENT_API_URL) == 0:

@@ -152,6 +152,8 @@ async def nyaa_callback(client, callback_query):
 TORRENT_API_URL_1 = "https://torrenter-api.herokuapp.com" # Link from Upstream APIs
 TORRENT_API_URL_2= "https://anishgowda.vercel.app" # Because this APIs has magnet support
 
+BOT_USERNAME = 'MegaNzDLBot'
+
 class TorrentSearch:
     index = 0
     query = None
@@ -167,7 +169,7 @@ class TorrentSearch:
         self.source = source.rstrip('/')
         self.RESULT_STR = result_str
 
-        app.add_handler(MessageHandler(self.find, filters.command([command])))
+        app.add_handler(MessageHandler(self.find, filters.command([command, {command}@{BOT_USERNAME}])))
         app.add_handler(CallbackQueryHandler(self.previous, filters.regex(f"{self.command}_previous")))
         app.add_handler(CallbackQueryHandler(self.delete, filters.regex(f"{self.command}_delete")))
         app.add_handler(CallbackQueryHandler(self.next, filters.regex(f"{self.command}_next")))
@@ -313,11 +315,9 @@ torrents_dict = {
     'ts': {'source': f"{TORRENT_API_URL_1}/api/all/", 'result_str': RESULT_STR_ALL}
 }
 
-cmd = f'{command}@BotUsername'
-
 torrent_handlers = []
 for command, value in torrents_dict.items():
-    torrent_handlers.append(TorrentSearch([command, cmd], value['source'], value['result_str']))
+    torrent_handlers.append(TorrentSearch(command, value['source'], value['result_str']))
 
 def searchhelp(update, context):
     help_string = '''

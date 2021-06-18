@@ -188,12 +188,12 @@ class TorrentSearch:
     def get_formatted_string(self, values):
         string = self.RESULT_STR.format(**values)
         magnet = values.get('magnet', values.get('Magnet'))  # Avoid updating source dict
-        down1 = values.get('dwnload1', values.get('Dwnload1'))  # Avoid updating source dict
-        down2 = values.get('download2', values.get('Download2'))  # Avoid updating source dict
+        down1 = values.get('Dwnload1') # Avoid updating source dict
+        down2 = values.get('Download2') # Avoid updating source dict
         if (magnet):
             string += f"➲Magnet: `{magnet.split('&tr', 1)[0]}`"
         elif (down1) or (down2):
-            string += f"➲First Link: `{down1.split('', 1)[0]}`\n\n➲Second Link: `{down2.split('', 1)[0]}"
+            string += f"➲First Link: `{down1[0]}`\n\n➲Second Link: `{down2[0]}"
         return string
 
     async def update_message(self):

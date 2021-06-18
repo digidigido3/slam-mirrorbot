@@ -341,7 +341,9 @@ CHAT = list(CHAT)
 CHAT.append(OWNER_ID)
 CHAT = list(set(CHAT))
 
-@app.on_message(filters.command(['tshelp', f'tshelp{BOT_USERNAME}']) & filters.chat(CHAT))
+T_HELP = ['tshelp', 'find', 'torrent', f'tshelp{BOT_USERNAME}', f'find{BOT_USERNAME}', f'torrent{BOT_USERNAME}']
+
+@app.on_message(filters.command(T_HELP) & filters.chat(CHAT))
 def searchhelp(client, message):
     help_string = '''
 <b>Example Usage:</b> <code>/nyaa naruto</code>
@@ -361,7 +363,7 @@ def searchhelp(client, message):
 • /torlock <i>[search query]</i>
 • /rarbg <i>[search query]</i>
 • /nyaasi <i>[search query]</i>
-• /ts <i>[search query]</i>
+• /torrent <i>[search query]</i>
 '''
     message.reply_photo(photo=IMAGE_URL, caption=help_string, parse_mode="html", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='delete_end')]]))
 

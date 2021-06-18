@@ -21,7 +21,6 @@ from bot import app, dispatcher, IMAGE_URL
 from bot.helper import custom_filters
 from bot.helper.telegram_helper.filters import CustomFilters
 
-session = aiohttp.ClientSession()
 search_lock = asyncio.Lock()
 search_info = {False: dict(), True: dict()}
 
@@ -33,8 +32,9 @@ async def return_search(query, page=1, sukebei=False):
         results, get_time = used_search_info.get(query, (None, 0))
         if (time.time() - get_time) > 3600:
             results = []
-            async with session.get(f'https://{"sukebei." if sukebei else ""}nyaa.si/?page=rss&q={urlencode(query)}') as resp:
-                d = feedparser.parse(await resp.text())
+            async with aiohttp.ClientSession() as session:
+                async with session.get(f'https://{"sukebei." if sukebei else ""}nyaa.si/?page=rss&q={urlencode(query)}') as resp:
+                    d = feedparser.parse(await resp.text())
             text = ''
             a = 0
             parser = pyrogram_html.HTML(None)
@@ -70,7 +70,7 @@ async def return_search(query, page=1, sukebei=False):
 message_info = dict()
 ignore = set()
 
-@app.on_message(filters.command(['nyaa']))
+@app.on_message(filters.command(['nyaa', 'nyaasi']))
 async def nyaa_search(client, message):
     text = message.text.split(' ')
     text.pop(0)
@@ -218,14 +218,19 @@ class TorrentSearch:
             await self.message.edit(f"No Results Found.")
             return
         await self.update_message()
-        # await session.close()
+        await session.close()
 
     async def delete(self, client, message):
+        global index
+        global query
+        global response
+        global response_range
+        global message.delete()
         index = 0
         query = None
-        message = None
         response = None
         response_range = None
+        message = None
 
     async def previous(self, client, message):
         self.index -= 1

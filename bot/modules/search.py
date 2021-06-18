@@ -161,7 +161,7 @@ class TorrentSearch:
     response = None
     response_range = None
 
-    RESULT_LIMIT = 20
+    RESULT_LIMIT = 10
     RESULT_STR = None
 
     def __init__(self, command: str, source: str, result_str: str):
@@ -246,61 +246,61 @@ class TorrentSearch:
 RESULT_STR_1337 = (
     "➲Name: `{Name}`\n"
     "➲Category: `{Category}`\n"
-    "➲Size: {Size}\n"
-    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
+    "➲Size: `{Size}`\n"
+    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n"
 )
 RESULT_STR_PIRATEBAY = (
     "➲Name: `{Name}`\n"
     "➲Category: `{Category}`\n"
-    "➲Size: {Size}\n"
-    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
+    "➲Size: `{Size}`\n"
+    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n"
 )
 RESULT_STR_TGX = (
     "➲Name: `{Name}`\n" 
     "➲Category: `{Category}`\n"
-    "➲Size: {Size}\n"
-    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
+    "➲Size: `{Size}`\n"
+    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n"
     "➲Torrent: `{TorrentLink}`\n"
 )
 RESULT_STR_YTS = (
     "➲Name: `{Name}`\n"
-    "➲Category: `{type} {quality}`\n"
+    "➲Category: `{type}` `{quality}`\n"
     "➲Genre: `{Genre}`\n"
-    "➲Seeders: {seeds} || ➲Leechers: {peers}\n"
+    "➲Seeders: `{seeds}` || ➲Leechers: `{peers}`\n"
     "➲Torrent: `{torrent_file}`\n"
 )
 RESULT_STR_EZTV = (
     "➲Name: `{Name}`\n"
-    "➲Size: {Size}\n"
-    "➲Seeders: {Seeds}\n"
+    "➲Size: `{Size}`\n"
+    "➲Seeders: `{Seeds}`\n"
     "➲Torrent: `{Torrent}`\n"
 )
 RESULT_STR_TORLOCK = (
     "➲Name: `{Name}`\n"
     "➲Category: `{Category}`\n"
-    "➲Size: {Size}\n"
-    "➲Seeders: {Seeds} || ➲Leechers: {Peers}\n"
+    "➲Size: `{Size}`\n"
+    "➲Seeders: `{Seeds}` || ➲Leechers: `{Peers}`\n"
     "➲Torrent: `{Torrent}`\n"
 )
 RESULT_STR_RARBG = (
     "➲Name: `{Name}`\n"
     "➲Category: `{Category}`\n"
-    "➲Size: {Size}\n"
+    "➲Size: `{Size}`\n"
     "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
 )
 RESULT_STR_NYAASI = (
     "➲Name: `{Name}`\n"
     "➲Category: `{Category}`\n"
-    "➲Size: {Size}\n"
-    "➲Seeders: {Seeder} || ➲Leechers: {Leecher}\n"
+    "➲Size: `{Size}`\n"
+    "➲Seeders: `{Seeder}` || ➲Leechers: `{Leecher}`\n"
     "➲Torrent: `{TorrentLink}`\n"
 
 )
 RESULT_STR_ALL = (
     "➲Name: `{Name}`\n"
     "➲Category: `{Category}`\n"
-    "➲Size: {Size}\n"
-    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
+    "➲Size: `{Size}`\n"
+    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n"
 )
 
 torrents_dict = {
@@ -321,6 +321,8 @@ for command, value in torrents_dict.items():
 
 def searchhelp(update, context):
     help_string = '''
+<b>Example Usage:</b> <code>/nyaa naruto</code>
+
 [  NYAASI RSS  ]
 
 • /nyaa <i>[search query]</i>

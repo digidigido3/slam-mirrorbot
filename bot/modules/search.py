@@ -189,18 +189,18 @@ class TorrentSearch:
 
     def get_formatted_string(self, values):
         string = self.RESULT_STR.format(**values)
+        magnet = values.get('magnet', values.get('Magnet'))  # Avoid updating source dict
+        down1 = values.get('dwnload1', values.get('Dwnload1'))  # Avoid updating source dict
+        down2 = values.get('download2', values.get('Download2'))  # Avoid updating source dict
         if (magnet):
-            magnet = values.get('magnet', values.get('Magnet'))  # Avoid updating source dict
-                string += f"**➲Magnet:** `{magnet.split('&tr', 1)[0]}`"
-        else:
-            Down1 = values.get('dwnload1', values.get('Dwnload1'))  # Avoid updating source dict
-            Down2 = values.get('download2', values.get('Download2'))  # Avoid updating source dict
-                string += f"**➲First Link:** `{Down1.split('&tr', 1)[0]}`\n\n**➲Second Link:** `{Down2.split('&tr', 1)[0]}"
+            string += f"➲Magnet: `{magnet.split('&tr', 1)[0]}`"
+        elif (down1) or (down2):
+            string += f"**➲First Link:** `{down1.split('mx', 1)[0]}`\n\n**➲Second Link:** `{down2.split('mx', 1)[0]}"
         return string
 
     async def update_message(self):
         prevBtn = InlineKeyboardButton(f"𝗣𝗿𝗲𝘃", callback_data=f"{self.command}_previous")
-        delBtn = InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data="delete")
+        delBtn = InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data=f"{self.command}_delete")
         nextBtn = InlineKeyboardButton(f"𝗡𝗲𝘅𝘁", callback_data=f"{self.command}_next")
 
         inline = []

@@ -291,6 +291,9 @@ torrent_handlers = []
 for command, value in torrents_dict.items():
     torrent_handlers.append(TorrentSearch(command, value['source'], value['result_str']))
 
+loop = asyncio.get_event_loop()
+loop.run_until_complete(find())
+
 def searchhelp(update, context):
     help_string = '''
 • /nyaa <i>[search query]</i>

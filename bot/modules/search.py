@@ -216,7 +216,7 @@ class TorrentSearch:
             await self.message.edit(f"No Results Found.")
             return
         await self.update_message()
-        await session.close()
+        # await session.close()
 
     async def delete(self, client, message):
         index = 0

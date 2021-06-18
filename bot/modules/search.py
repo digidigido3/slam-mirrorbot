@@ -98,7 +98,7 @@ async def init_search(client, message, query, sukebei):
     if not result:
         await message.reply_text('No results found')
     else:
-        buttons = [InlineKeyboardButton(f'1/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'𝗡𝗲𝘅𝘁', 'nyaa_next')]
+        buttons = [InlineKeyboardButton(f'1/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'𝗡𝗲𝘅𝘁', 'nyaa_next')], [InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='delete_end')]
         if pages == 1:
             buttons.pop()
         reply = await message.reply_text(result, reply_markup=InlineKeyboardMarkup([
@@ -138,9 +138,9 @@ async def nyaa_callback(client, callback_query):
                 await callback_query.answer('...no', cache_time=3600)
                 return
             text, pages, ttl = await return_search(query, current_page, sukebei)
-        buttons = [InlineKeyboardButton(f'𝗣𝗿𝗲𝘃', 'nyaa_back'), InlineKeyboardButton(f'{current_page}/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'𝗡𝗲𝘅𝘁', 'nyaa_next')]
+        buttons = [InlineKeyboardButton(f'𝗣𝗿𝗲𝘃', 'nyaa_back'), InlineKeyboardButton(f'{current_page}/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'𝗡𝗲𝘅𝘁', 'nyaa_next')], [InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='delete_end')]
         if ttl_ended:
-            buttons = [InlineKeyboardButton('Search Expired', 'nyaa_nop')]
+            buttons = [InlineKeyboardButton('Search Expired', 'nyaa_nop'), InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='delete_end')]
         else:
             if current_page == 1:
                 buttons.pop(0)
@@ -340,14 +340,14 @@ CHAT = list(CHAT)
 CHAT.append(OWNER_ID)
 CHAT = list(set(CHAT))
 
-T_HELP = ['tshelp', 'find', 'torrent', f'tshelp{BOT_USERNAME}', f'find{BOT_USERNAME}', f'torrent{BOT_USERNAME}']
+T_HELP = ['tshelp', 'find', 'ts', f'tshelp{BOT_USERNAME}', f'find{BOT_USERNAME}', f'ts{BOT_USERNAME}']
 
 @app.on_message(filters.command(T_HELP) & filters.chat(CHAT))
 def searchhelp(client, message):
     help_string = '''
 <b>Example Usage:</b> <code>/nyaa naruto</code>
 
-<b>[  NYAA.SI RSS  ]</b>
+<b>[   NYAA SI RSS   ]</b>
 
 • /nyaa <i>[search query]</i>
 • /sukebei <i>[search query]</i>

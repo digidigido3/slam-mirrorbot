@@ -56,7 +56,7 @@ async def config_menu(_, message):
     await message.reply(
         f"**Hello {message.from_user.mention}**,\n\n**If you want to add or set Variable in Heroku use** `/setvar`\n\n**If you want to delete Variable in Heroku use `/delvar`**\n\n**If you want to Update Bot with [Upstream Repo]({UPSTREAM_REPO}) use `/{BotCommands.UpdateCommand}`**\n\n**WARNING! Very Recommended to do this command in private since it's contain bot info.**\n\n**Here's This is Slam-MirrorBot Current Configs**\n\n\n",
         reply_markup=types.InlineKeyboardMarkup(
-            [[types.InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='docs_end'), types.InlineKeyboardButton(f"BOT CONFIG", callback_data='docs_1')]]
+            [[types.InlineKeyboardButton("Var Name", url="https://github.com/breakdowns/slam-mirrorbot#setting-up-config-file"),types.InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='docs_end'), types.InlineKeyboardButton(f"BOT CONFIG", callback_data='docs_1')]]
         )
     )
 
@@ -80,7 +80,7 @@ async def config_button(_, query):
     elif data == '2':
         return await query.message.edit(
             __header__.format(data)
-            + f"**[ Drive and Index Config ]**\n**Drive Folder:** `{parent_id}`\n\n**Using Team Drive:** `{IS_TEAM_DRIVE}`\n\n**Using Service Account:** `{USE_SERVICE_ACCOUNTS}`\n\n**Index Url:** `{INDEX_URL}`\n\n\n",
+            + f"**[ Drive and Index Config ]**\n\n**Drive Folder:** `{parent_id}`\n\n**Using Team Drive:** `{IS_TEAM_DRIVE}`\n\n**Using Service Account:** `{USE_SERVICE_ACCOUNTS}`\n\n**Index Url:** `{INDEX_URL}`\n\n\n",
             reply_markup=types.InlineKeyboardMarkup(
                 [
                     [

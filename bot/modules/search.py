@@ -7,8 +7,8 @@ import json
 import feedparser
 import requests
 
-from telegram.ext import CommandHandler
-from telegram import ParseMode
+#from telegram.ext import CommandHandler
+#from telegram import ParseMode
 
 from urllib.parse import quote as urlencode, urlsplit
 
@@ -17,7 +17,8 @@ from pyrogram.parser import html as pyrogram_html
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.handlers import MessageHandler, CallbackQueryHandler
 
-from bot import app, dispatcher, IMAGE_URL
+from bot import app, IMAGE_URL, AUTHORIZED_CHATS, OWNER_ID, SUDO_USERS
+#from bot import dispatcher 
 from bot.helper import custom_filters
 from bot.helper.telegram_helper.filters import CustomFilters
 
@@ -318,7 +319,12 @@ torrent_handlers = []
 for command, value in torrents_dict.items():
     torrent_handlers.append(TorrentSearch(command, value['source'], value['result_str']))
 
-@app.on_message(filters.command(['tshelp', f'tshelp{BOT_USERNAME}']))
+CHAT = AUTHORIZED_CHATS
+CHAT = list(CHAT)
+CHAT.append(OWNER_ID)
+CHAT = list(set(CHAT))
+
+@app.on_message(filters.command(['tshelp', f'tshelp{BOT_USERNAME}']) & filters.chat(CHAT))
 def searchhelp(client, message):
     help_string = '''
 <b>Example Usage:</b> <code>/nyaa naruto</code>

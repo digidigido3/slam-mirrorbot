@@ -335,14 +335,9 @@ torrent_handlers = []
 for command, value in torrents_dict.items():
     torrent_handlers.append(TorrentSearch(command, value['source'], value['result_str']))
 
-CHAT = AUTHORIZED_CHATS
-CHAT = list(CHAT)
-CHAT.append(OWNER_ID)
-CHAT = list(set(CHAT))
+T_HELP = ['tshelp', 'find', 'ts']
 
-T_HELP = ['tshelp', 'find', 'ts', f'tshelp{BOT_USERNAME}', f'find{BOT_USERNAME}', f'ts{BOT_USERNAME}']
-
-@app.on_message(filters.command(T_HELP) & filters.chat(CHAT))
+@app.on_message(filters.command(T_HELP, T_HELP{BOT_USERNAME}))
 def searchhelp(client, message):
     help_string = '''
 <b>Example Usage:</b> <code>/nyaa naruto</code>

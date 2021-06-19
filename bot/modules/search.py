@@ -232,6 +232,10 @@ class TorrentSearch:
         )
 
     async def find(self, client, message):
+        try:
+            await message.delete()
+        except:
+            pass
         if len(message.command) < 2:
             await message.reply_text(f"Usage: /{self.command} query")
             return
@@ -272,47 +276,47 @@ class TorrentSearch:
 RESULT_STR_1337X = (
     "➲Name: `{Name}`\n"
     "➲Category: `{Category}` || ➲Size: `{Size}`\n"
-    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n\n"
+    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n"
 )
 RESULT_STR_PIRATEBAY = (
     "➲Name: `{Name}`\n"
     "➲Category: `{Category}` || ➲Size: `{Size}`\n"
-    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n\n"
+    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n"
 )
 RESULT_STR_TGX = (
     "➲Name: `{Name}`\n" 
     "➲Category: `{Category}` || ➲Size: `{Size}`\n"
-    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n\n"
+    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n"
 )
 RESULT_STR_YTS = (
     "➲Name: `{Name}`"
 )
 RESULT_STR_EZTV = (
     "➲Name: `{Name}`\n"
-    "➲Size: `{Size}` || ➲Seeders: `{Seeders}`\n\n"
-    "➲Torrent: `{Torrent}`\n\n"
+    "➲Size: `{Size}` || ➲Seeders: `{Seeders}`\n"
+    "➲Torrent: `{Torrent}`\n"
 )
 RESULT_STR_TORLOCK = (
     "➲Name: `{Name}`\n"
     "➲Category: `{Category}` || ➲Size: `{Size}`\n"
-    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n\n"
-    "➲Torrent: `{Torrent}`\n\n"
+    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n"
+    "➲Torrent: `{Torrent}`\n"
 )
 RESULT_STR_RARBG = (
     "➲Name: `{Name}`\n"
     "➲Category: `{Category}` || ➲Size: `{Size}`\n"
-    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n\n"
+    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
 )
 RESULT_STR_NYAASI = (
     "➲Name: `{Name}`\n"
     "➲Category: `{Category}` || ➲Size: `{Size}`\n"
-    "➲Seeders: `{Seeder}` || ➲Leechers: `{Leecher}`\n\n"
-    "➲Torrent: `{TorrentLink}`\n\n"
+    "➲Seeders: `{Seeder}` || ➲Leechers: `{Leecher}`\n"
+    "➲Torrent: `{TorrentLink}`\n"
 )
 RESULT_STR_ALL = (
     "➲Name: `{Name}`\n"
     "➲Size: {Size}\n"
-    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}"
+    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
 )
 
 torrents_dict = {

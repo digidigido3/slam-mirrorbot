@@ -268,7 +268,7 @@ RESULT_STR_TGX = (
 RESULT_STR_YTS = (
     "➲Name: `{Name}`\n"
     "➲Genre: `{Genre}`\n"
-    "➲Detail: `{Files[Size]}` `{Files[Quality]}` `{Files[Type]}`\n\n"
+    "➲Detail: `{Files['Size']}` `{Files['Quality']}` `{Files['Type']}`\n\n"
     "➲Torrent: `{Torrent}`\n\n"
 )
 RESULT_STR_EZTV = (

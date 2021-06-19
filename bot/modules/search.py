@@ -186,11 +186,12 @@ class TorrentSearch:
         app.add_handler(CallbackQueryHandler(self.next, filters.regex(f"{self.command}_next")))
 
     def get_formatted_string(self, values):
+        string = self.RESULT_STR.format(**values)
         magnet = values.get('magnet', values.get('Magnet'))  # Avoid updating source dict
         if (magnet):
             string += f"➲Magnet: `{magnet.split('&tr', 1)[0]}`"
         return string
-
+    
     async def update_message(self):
         prevBtn = InlineKeyboardButton(f"𝗣𝗿𝗲𝘃", callback_data=f"{self.command}_previous")
         delBtn = InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data=f"{self.command}_delete")

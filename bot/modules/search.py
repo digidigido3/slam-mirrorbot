@@ -268,7 +268,7 @@ RESULT_STR_TGX = (
 RESULT_STR_YTS = (
     "➲Name: `{Name}`\n"
     "➲Genre: `{Genre}`\n"
-    "➲Detail: `{Files['Size']}` `{Files['Quality']}` `{Files['Type']}`\n\n"
+    "➲Detail: `{Files[{'Size'}]}` `{Files[{'Quality'}]}` `{Files[{'Type'}]}`\n\n"
     "➲Torrent: `{Torrent}`\n\n"
 )
 RESULT_STR_EZTV = (
@@ -295,7 +295,9 @@ RESULT_STR_NYAASI = (
 
 )
 RESULT_STR_ALL = (
-    "➲Name: `{Name}`\n\n"
+    "➲Name: `{Name}`\n"
+    "➲Size: {Size}\n"
+    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
 )
 
 torrents_dict = {
@@ -307,7 +309,7 @@ torrents_dict = {
     'torlock': {'source': f"{TORRENT_API_URL}/api/torlock/", 'result_str': RESULT_STR_TORLOCK},
     'rarbg': {'source': f"{TORRENT_API_URL}/api/rarbg/", 'result_str': RESULT_STR_RARBG},
     'nyaasi': {'source': f"{TORRENT_API_URL}/api/rarbg/", 'result_str': RESULT_STR_RARBG}, # For Alternative Search For Nyaa.si
-    'torrent': {'source': f"{TORRENT_API_URL}/api/all/", 'result_str': RESULT_STR_ALL}
+    'ts': {'source': f"{TORRENT_API_URL}/api/all/", 'result_str': RESULT_STR_ALL}
 }
 
 torrent_handlers = []
@@ -335,7 +337,7 @@ def searchhelp(client, message):
 • /torlock <i>[search query]</i>
 • /rarbg <i>[search query]</i>
 • /nyaasi <i>[search query]</i>
-• /torrent <i>[search query]</i>
+• /ts <i>[search query]</i>
 '''
     message.reply_photo(photo=IMAGE_URL, caption=help_string, parse_mode="html", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='delete_end'), InlineKeyboardButton(f"APIs Url", url=f'{TORRENT_API_URL}')]]))
 

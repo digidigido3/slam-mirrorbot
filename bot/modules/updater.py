@@ -38,9 +38,9 @@ async def update_it(client, message):
         else:
             origin = repo.create_remote("upstream", REPO_)
         origin.fetch()
-        repo.create_head(UPSTREAM_BRANCH, origin.refs.{UPSTREAM_BRANCH})
-        repo.heads.{UPSTREAM_BRANCH}.set_tracking_branch(origin.refs.{UPSTREAM_BRANCH})
-        repo.heads.{UPSTREAM_BRANCH}.checkout(True)
+        repo.create_head(UPSTREAM_BRANCH, origin.refs.f'{UPSTREAM_BRANCH}')
+        repo.heads.f'{UPSTREAM_BRANCH}'.set_tracking_branch(origin.refs.f'{UPSTREAM_BRANCH}')
+        repo.heads.f'{UPSTREAM_BRANCH}'.checkout(True)
     if repo.active_branch.name != UPSTREAM_BRANCH:
         return await msg_.edit(
             f"`Seems Like You Are Using Custom Branch - {repo.active_branch.name}! Please Switch To {UPSTREAM_BRANCH} To Make This Updater Function!`"
@@ -75,7 +75,7 @@ async def update_it(client, message):
         else:
             remote = repo.create_remote("heroku", HEROKU_URL)
         try:
-            remote.push(refspec=f"HEAD:refs/heads/master", force=True)
+            remote.push(refspec=f"HEAD:refs/heads/f'{UPSTREAM_BRANCH}'", force=True)
         except BaseException as error:
             await msg_.edit(f"**Updater Error** \nTraceBack : `{error}`")
             return repo.__del__()

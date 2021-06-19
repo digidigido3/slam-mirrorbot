@@ -250,7 +250,7 @@ class TorrentSearch:
         self.index += 1
         await self.update_message()
 
-RESULT_STR_1337 = (
+RESULT_STR_1337X = (
     "➲Name: `{Name}`\n"
     "➲Category: `{Category}` || ➲Size: `{Size}`\n"
     "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n\n"
@@ -264,12 +264,6 @@ RESULT_STR_TGX = (
     "➲Name: `{Name}`\n" 
     "➲Category: `{Category}` || ➲Size: `{Size}`\n"
     "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n\n"
-)
-RESULT_STR_YTS = (
-    "➲Name: `{Name}`\n"
-    "➲Genre: `{Genre}`\n"
-    "➲Detail: `{Files[{'Size'}]}` `{Files[{'Quality'}]}` `{Files[{'Type'}]}`\n\n"
-    "➲Torrent: `{Torrent}`\n\n"
 )
 RESULT_STR_EZTV = (
     "➲Name: `{Name}`\n"
@@ -294,21 +288,15 @@ RESULT_STR_NYAASI = (
     "➲Torrent: `{TorrentLink}`\n\n"
 
 )
-RESULT_STR_ALL = (
-    "➲Name: `{Name}`\n"
-    "➲Size: {Size}\n\n"
-)
 
 torrents_dict = {
-    '1337x': {'source': f"{TORRENT_API_URL}/api/1337x/", 'result_str': RESULT_STR_1337},
+    '1337x': {'source': f"{TORRENT_API_URL}/api/1337x/", 'result_str': RESULT_STR_1337X},
     'piratebay': {'source': f"{TORRENT_API_URL}/api/piratebay/", 'result_str': RESULT_STR_PIRATEBAY},
     'tgx': {'source': f"{TORRENT_API_URL}/api/tgx/", 'result_str': RESULT_STR_TGX},
-    'yts': {'source': f"{TORRENT_API_URL}/api/yts/", 'result_str': RESULT_STR_YTS},
     'eztv': {'source': f"{TORRENT_API_URL}/api/eztv/", 'result_str': RESULT_STR_EZTV},
     'torlock': {'source': f"{TORRENT_API_URL}/api/torlock/", 'result_str': RESULT_STR_TORLOCK},
     'rarbg': {'source': f"{TORRENT_API_URL}/api/rarbg/", 'result_str': RESULT_STR_RARBG},
     'nyaasi': {'source': f"{TORRENT_API_URL}/api/rarbg/", 'result_str': RESULT_STR_RARBG}, # For Alternative Search For Nyaa.si
-    'ts': {'source': f"{TORRENT_API_URL}/api/all/", 'result_str': RESULT_STR_ALL}
 }
 
 torrent_handlers = []
@@ -331,12 +319,10 @@ def searchhelp(client, message):
 • /1337x <i>[search query]</i>
 • /piratebay <i>[search query]</i>
 • /tgx <i>[search query]</i>
-• /yts <i>[search query]</i>
 • /eztv <i>[search query]</i>
 • /torlock <i>[search query]</i>
 • /rarbg <i>[search query]</i>
 • /nyaasi <i>[search query]</i>
-• /ts <i>[search query]</i>
 '''
     message.reply_photo(photo=IMAGE_URL, caption=help_string, parse_mode="html", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='delete_end'), InlineKeyboardButton(f"APIs Url", url=f'{TORRENT_API_URL}')]]))
 

@@ -346,7 +346,7 @@ async def find_yts(_, message):
     poster = {a[i]['Poster']}
     await m.edit(
         photo=poster,
-        result,
+        caption=result,
         reply_markup=InlineKeyboardMarkup(
             [
                 [
@@ -380,7 +380,7 @@ async def callback_query_next_yts(_, message):
     poster = {a[i]['Poster']}
     await m.edit(
         photo=poster,
-        result,
+        caption=result,
         reply_markup=InlineKeyboardMarkup(
             [
                 [
@@ -417,7 +417,7 @@ async def callback_query_previous_yts(_, message):
     poster = {a[i]['Poster']}
     await m.edit(
         photo=poster,
-        result,
+        caption=result,
         reply_markup=InlineKeyboardMarkup(
             [
                 [

@@ -277,7 +277,7 @@ RESULT_STR_YTS = (
     "➲Genre: `{Genre}` || ➲Rating: `{Rating}`\n"
     "➲Duration: `{Runtime}` || ➲Released Date: `{ReleasedDate}`\n"
     "➲First Link: `{Dwnload1}`\n\n"
-    "➲Second Link: `{Download2}"
+    "➲Second Link: `{Download2}`"
 )
 RESULT_STR_EZTV = (
     "➲Name: `{Name}`\n"

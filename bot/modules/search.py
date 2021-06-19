@@ -317,7 +317,7 @@ for command, value in torrents_dict.items():
 #====== yts =======#
 
 @app.on_message(filters.command(["yts", f"yts{BOT_USERNAME}"]))
-async def find_yts(_, message):
+async def find_yts_btn(_, message):
     global m
     global i
     global a
@@ -344,11 +344,11 @@ async def find_yts(_, message):
         f"➲First Link: `{a[i]['Dwnload1']}`\n\n"
         f"➲Second Link: `{a[i]['Download2']}`\n\n\n"
     )
-    await m.edit(caption=result, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"Next", callback_data="yts_next"), InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data="delete")]]), parse_mode="markdown", disable_web_page_preview=True)
+    await m.edit(caption=result, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"Next", callback_data="yts_next_btn"), InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data="delete_btn")]]), parse_mode="markdown", disable_web_page_preview=True)
 
 
-@app.on_callback_query(filters.regex("yts_next"))
-async def callback_query_next_yts(_, message):
+@app.on_callback_query(filters.regex("yts_next_btn"))
+async def callback_query_next_yts_btn(_, message):
     global i
     global m
     global a
@@ -363,11 +363,11 @@ async def callback_query_next_yts(_, message):
         f"➲First Link: `{a[i]['Dwnload1']}`\n\n"
         f"➲Second Link: `{a[i]['Download2']}`\n\n\n"
     )
-    await m.edit(caption=result, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"Prev", callback_data="yts_previous"), InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data="delete"), InlineKeyboardButton(f"Next", callback_data="yts_next")]]), parse_mode="markdown", disable_web_page_preview=True)
+    await m.edit(caption=result, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"Prev", callback_data="yts_previous_btn"), InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data="delete_btn"), InlineKeyboardButton(f"Next", callback_data="yts_next_btn")]]), parse_mode="markdown", disable_web_page_preview=True)
 
 
-@app.on_callback_query(filters.regex("yts_previous"))
-async def callback_query_previous_yts(_, message):
+@app.on_callback_query(filters.regex("yts_previous_btn"))
+async def callback_query_previous_yts_btn(_, message):
     global i
     global m
     global a
@@ -382,10 +382,10 @@ async def callback_query_previous_yts(_, message):
         f"➲First Link: `{a[i]['Dwnload1']}`\n\n"
         f"➲Second Link: `{a[i]['Download2']}`\n\n\n"
     )
-    await m.edit(caption=result, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"Prev", callback_data="yts_previous"), InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data="delete"), InlineKeyboardButton(f"Next", callback_data="yts_next")]]), parse_mode="markdown", disable_web_page_preview=True)
+    await m.edit(caption=result, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"Prev", callback_data="yts_previous"), InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data="delete_btn"), InlineKeyboardButton(f"Next", callback_data="yts_next")]]), parse_mode="markdown", disable_web_page_preview=True)
 
-@app.on_callback_query(filters.regex("delete"))
-async def callback_query_delete(_, message):
+@app.on_callback_query(filters.regex("delete_btn"))
+async def callback_query_delete_btn(_, message):
     global m
     global i
     global a

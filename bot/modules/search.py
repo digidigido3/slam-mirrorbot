@@ -108,6 +108,7 @@ async def init_search(client, message, query, sukebei):
 @app.on_callback_query(custom_filters.callback_data('nyaa_nop'))
 async def nyaa_nop(client, callback_query):
     await callback_query.answer(cache_time=3600)
+    await callback_query.delete()
 
 callback_lock = asyncio.Lock()
 @app.on_callback_query(custom_filters.callback_data(['nyaa_back', 'nyaa_next']))

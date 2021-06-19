@@ -191,7 +191,7 @@ class TorrentSearch:
         string = self.RESULT_STR.format(**values)
         extra = ""
         if "Files" in values:
-            tmp_str = "\n\n➲Detail: `{Quality}` - `{Type}` `({Size})`\n➲Torrent: `{Torrent}`\n➲Magnet: `{magnet}`\n\n"
+            tmp_str = "\n➲Detail: `{Quality}` - `{Type}` `({Size})`\n➲Torrent: `{Torrent}`\n➲Magnet: `{magnet}`\n"
             extra += "\n".join(
                 tmp_str.format(**f, magnet=self.format_magnet(f['Magnet']))
                 for f in values['Files']
@@ -216,10 +216,13 @@ class TorrentSearch:
         if (self.index != len(self.response_range) - 1):
             inline.append(nextBtn)
 
+        res_lim = min(self.RESULT_LIMIT, len(self.response) - self.RESULT_LIMIT*self.index)
+        result = f"**Page - {self.index+1}**\n\n"
+        result += "\n\n=======================\n\n".join(
         result = f"**📕 Page - {self.index+1}**\n\n"
         result += "\n\n════════════ 𝙏𝙊𝙍𝙍𝙀𝙉𝙏 ═════════════\n\n".join(
             self.get_formatted_string(self.response[self.response_range[self.index]+i])
-            for i in range(self.RESULT_LIMIT)
+            for i in range(res_lim)
         )
 
         await self.message.edit(

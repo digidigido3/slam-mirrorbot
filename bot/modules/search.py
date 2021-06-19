@@ -268,7 +268,7 @@ RESULT_STR_TGX = (
 RESULT_STR_YTS = (
     "➲Name: `{Name}`\n"
     "➲Genre: `{Genre}`\n"
-    "➲Detail: `{Size}` `{Quality} {Type}`\n\n"
+    "➲Detail: `{Files[Size]}` `{Files[Quality]}` `{Files[Type]}`\n\n"
     "➲Torrent: `{Torrent}`\n\n"
 )
 RESULT_STR_EZTV = (
@@ -295,9 +295,7 @@ RESULT_STR_NYAASI = (
 
 )
 RESULT_STR_ALL = (
-    "➲Name: `{Name}`\n"
-    "➲Category: `{Category}` || ➲Size: `{Size}`\n"
-    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n\n"
+    "➲Name: `{Name}`\n\n"
 )
 
 torrents_dict = {

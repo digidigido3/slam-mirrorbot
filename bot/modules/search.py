@@ -346,7 +346,7 @@ def searchhelp(client, message):
 • /nyaasi <i>[search query]</i>
 • /torrent <i>[search query]</i>
 '''
-    message.reply_photo(photo=IMAGE_URL, caption=help_string, parse_mode="html", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='delete_end')]]))
+    message.reply_photo(photo=IMAGE_URL, caption=help_string, parse_mode="html", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='delete_end'), InlineKeyboardButton(f"APIs Url", url=f'{TORRENT_API_URL}')]]))
 
 @app.on_callback_query(filters.regex('^delete_')) # Added this button to reduce spam
 async def delete_button(_, query):

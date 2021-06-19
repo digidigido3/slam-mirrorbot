@@ -314,89 +314,6 @@ torrent_handlers = []
 for command, value in torrents_dict.items():
     torrent_handlers.append(TorrentSearch(command, value['source'], value['result_str']))
 
-#====== yts =======#
-
-@app.on_message(filters.command(["yts", f"yts{BOT_USERNAME}"]))
-async def find_yts_btn(_, message):
-    global m
-    global i
-    global a
-    global query
-    if len(message.command) < 2:
-        await message.reply_text("Usage: /yts query")
-        return
-    query = message.text.split(None, 1)[1].replace(" ", "%20")
-    m = await message.reply_text("Searching")
-    try:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(f"{TORRENT_API_URL}/api/yts/{query}") \
-                    as resp:
-                a = json.loads(await resp.text())
-    except:
-        await m.edit("Found Nothing.")
-        return
-    result = (
-        f"**Page - {i+1}**\n\n"
-        f"➲Name: [{a[i]['Name']}]({a[i]['Url']})\n"
-        f"➲Genre: {a[i]['Genre']} || Released on: {a[i]['ReleasedDate']}\n" 
-        f"➲Rating: {a[i]['Rating']} || ➲Likes: {a[i]['Likes']}\n"
-        f"➲Duration: {a[i]['Runtime']} || ➲Language: {a[i]['Language']}\n\n"
-        f"➲First Link: `{a[i]['Dwnload1']}`\n\n"
-        f"➲Second Link: `{a[i]['Download2']}`\n\n\n"
-    )
-    await m.edit(caption=result, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"Next", callback_data="yts_next_btn"), InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data="delete_btn")]]), parse_mode="markdown", disable_web_page_preview=True)
-
-
-@app.on_callback_query(filters.regex("yts_next_btn"))
-async def callback_query_next_yts_btn(_, message):
-    global i
-    global m
-    global a
-    global query
-    i += 1
-    result = (
-        f"**Page - {i+1}**\n\n"
-        f"➲Name: [{a[i]['Name']}]({a[i]['Url']})\n"
-        f"➲Genre: {a[i]['Genre']} || Released on: {a[i]['ReleasedDate']}\n" 
-        f"➲Rating: {a[i]['Rating']} || ➲Likes: {a[i]['Likes']}\n"
-        f"➲Duration: {a[i]['Runtime']} || ➲Language: {a[i]['Language']}\n\n"
-        f"➲First Link: `{a[i]['Dwnload1']}`\n\n"
-        f"➲Second Link: `{a[i]['Download2']}`\n\n\n"
-    )
-    await m.edit(caption=result, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"Prev", callback_data="yts_previous_btn"), InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data="delete_btn"), InlineKeyboardButton(f"Next", callback_data="yts_next_btn")]]), parse_mode="markdown", disable_web_page_preview=True)
-
-
-@app.on_callback_query(filters.regex("yts_previous_btn"))
-async def callback_query_previous_yts_btn(_, message):
-    global i
-    global m
-    global a
-    global query
-    i -= 1
-    result = (
-        f"**Page - {i+1}**\n\n"
-        f"➲Name: [{a[i]['Name']}]({a[i]['Url']})\n"
-        f"➲Genre: {a[i]['Genre']} || Released on: {a[i]['ReleasedDate']}\n" 
-        f"➲Rating: {a[i]['Rating']} || ➲Likes: {a[i]['Likes']}\n"
-        f"➲Duration: {a[i]['Runtime']} || ➲Language: {a[i]['Language']}\n\n"
-        f"➲First Link: `{a[i]['Dwnload1']}`\n\n"
-        f"➲Second Link: `{a[i]['Download2']}`\n\n\n"
-    )
-    await m.edit(caption=result, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"Prev", callback_data="yts_previous"), InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data="delete_btn"), InlineKeyboardButton(f"Next", callback_data="yts_next")]]), parse_mode="markdown", disable_web_page_preview=True)
-
-@app.on_callback_query(filters.regex("delete_btn"))
-async def callback_query_delete_btn(_, message):
-    global m
-    global i
-    global a
-    global query
-    await m.delete()
-    m = None
-    i = 0
-    a = None
-    query = None    
-
-#====== yts =======#
 
 @app.on_message(filters.command(['tshelp', f'tshelp{BOT_USERNAME}']))
 def searchhelp(client, message):
@@ -413,7 +330,6 @@ def searchhelp(client, message):
 • /1337x <i>[search query]</i>
 • /piratebay <i>[search query]</i>
 • /tgx <i>[search query]</i>
-• /yts <i>[search query]</i>
 • /eztv <i>[search query]</i>
 • /torlock <i>[search query]</i>
 • /rarbg <i>[search query]</i>

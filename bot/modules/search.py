@@ -189,8 +189,6 @@ class TorrentSearch:
         magnet = values.get('magnet', values.get('Magnet'))  # Avoid updating source dict
         if (magnet):
             string += f"➲Magnet: `{magnet.split('&tr', 1)[0]}`"
-        elif (magnet) is None:
-            string += f"➲Magnet: `None`"
         return string
 
     async def update_message(self):

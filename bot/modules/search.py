@@ -217,8 +217,6 @@ class TorrentSearch:
             inline.append(nextBtn)
 
         res_lim = min(self.RESULT_LIMIT, len(self.response) - self.RESULT_LIMIT*self.index)
-        result = f"**Page - {self.index+1}**\n\n"
-        result += "\n\n=======================\n\n".join(
         result = f"**📕 Page - {self.index+1}**\n\n"
         result += "\n\n════════════ 𝙏𝙊𝙍𝙍𝙀𝙉𝙏 ═════════════\n\n".join(
             self.get_formatted_string(self.response[self.response_range[self.index]+i])

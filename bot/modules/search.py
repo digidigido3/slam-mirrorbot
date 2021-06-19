@@ -296,8 +296,7 @@ RESULT_STR_NYAASI = (
 )
 RESULT_STR_ALL = (
     "➲Name: `{Name}`\n"
-    "➲Size: {Size}\n"
-    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
+    "➲Size: {Size}\n\n"
 )
 
 torrents_dict = {

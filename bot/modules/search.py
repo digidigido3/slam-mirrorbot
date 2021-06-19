@@ -140,7 +140,6 @@ async def nyaa_callback(client, callback_query):
         buttons = [InlineKeyboardButton(f'𝗣𝗿𝗲𝘃', 'nyaa_back'), InlineKeyboardButton(f'{current_page}/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'𝗡𝗲𝘅𝘁', 'nyaa_next')]
         if ttl_ended:
             buttons = [InlineKeyboardButton('Search Expired', 'nyaa_nop')]
-            await message.delete()
         else:
             if current_page == 1:
                 buttons.pop(0)
@@ -272,13 +271,6 @@ RESULT_STR_TGX = (
     "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n"
     "➲Torrent: `{TorrentLink}`\n\n"
 )
-RESULT_STR_YTS = (
-    "➲Name: `{Name}`\n"
-    "➲Genre: `{Genre}` || ➲Rating: `{Rating}`\n"
-    "➲Duration: `{Runtime}` || ➲Released Date: `{ReleasedDate}`\n"
-    "➲First Link: `{Dwnload1}`\n\n"
-    "➲Second Link: `{Download2}`"
-)
 RESULT_STR_EZTV = (
     "➲Name: `{Name}`\n"
     "➲Size: `{Size}` || ➲Seeders: `{Seeds}`\n"
@@ -312,7 +304,6 @@ torrents_dict = {
     '1337x': {'source': f"{TORRENT_API_URL}/api/1337x/", 'result_str': RESULT_STR_1337},
     'piratebay': {'source': f"{TORRENT_API_URL}/api/piratebay/", 'result_str': RESULT_STR_PIRATEBAY},
     'tgx': {'source': f"{TORRENT_API_URL}/api/tgx/", 'result_str': RESULT_STR_TGX},
-    'yts': {'source': f"{TORRENT_API_URL}/api/yts/", 'result_str': RESULT_STR_YTS},
     'eztv': {'source': f"{TORRENT_API_URL}/api/eztv/", 'result_str': RESULT_STR_EZTV},
     'torlock': {'source': f"{TORRENT_API_URL}/api/torlock/", 'result_str': RESULT_STR_TORLOCK},
     'rarbg': {'source': f"{TORRENT_API_URL}/api/rarbg/", 'result_str': RESULT_STR_RARBG},
@@ -323,6 +314,140 @@ torrents_dict = {
 torrent_handlers = []
 for command, value in torrents_dict.items():
     torrent_handlers.append(TorrentSearch(command, value['source'], value['result_str']))
+
+#====== yts =======#
+
+@app.on_message(filters.command(['yts', f'yts{BOT_USERNAME}']))
+async def find_yts(_, message):
+    global m
+    global i
+    global a
+    global query
+    if len(message.command) < 2:
+        await message.reply_text("Usage: /yts query")
+        return
+    query = message.text.split(None, 1)[1].replace(" ", "%20")
+    m = await message.reply_text("Searching")
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f"{TORRENT_API_URL}/yts/{query}") \
+                    as resp:
+                a = json.loads(await resp.text())
+    except:
+        await m.edit("Found Nothing.")
+        return
+    result = (
+        f"**Page - {i+1}**\n\n"
+        f"➲Name: [{a[i]['Name']}]({a[i]['Url']})\n"
+        f"➲Genre: {a[i]['Genre']} || Released on: {a[i]['ReleasedDate']}\n" 
+        f"➲Rating: {a[i]['Rating']} || ➲Likes: {a[i]['Likes']}\n"
+        f"➲Duration: {a[i]['Runtime']} || ➲Language: {a[i]['Language']}\n\n"
+        f"➲First Link: `{a[i]['Dwnload1']}`\n\n"
+        f"➲Second Link: `{a[i]['Download2']}`\n\n\n"
+    ),
+    poster = {a[i]['Poster']}
+    await m.edit(
+        photo=poster,
+        result,
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(f"Next",
+                                         callback_data="yts_next"),
+                    InlineKeyboardButton(f"{emoji.CROSS_MARK}",
+                                         callback_data="delete")
+                ]
+            ]
+        ),
+        parse_mode="markdown", disable_web_page_preview=True,
+    )
+
+
+@app.on_callback_query(filters.regex("yts_next"))
+async def callback_query_next_yts(_, message):
+    global i
+    global m
+    global a
+    global query
+    i += 1
+    result = (
+        f"**Page - {i+1}**\n\n"
+        f"➲Name: [{a[i]['Name']}]({a[i]['Url']})\n"
+        f"➲Genre: {a[i]['Genre']} || Released on: {a[i]['ReleasedDate']}\n" 
+        f"➲Rating: {a[i]['Rating']} || ➲Likes: {a[i]['Likes']}\n"
+        f"➲Duration: {a[i]['Runtime']} || ➲Language: {a[i]['Language']}\n\n"
+        f"➲First Link: `{a[i]['Dwnload1']}`\n\n"
+        f"➲Second Link: `{a[i]['Download2']}`\n\n\n"
+    ),
+    poster = {a[i]['Poster']}
+    await m.edit(
+        photo=poster,
+        result,
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(f"Prev",
+                                         callback_data="yts_previous"),
+                    InlineKeyboardButton(f"{emoji.CROSS_MARK}",
+                                         callback_data="delete"),
+                    InlineKeyboardButton(f"Next",
+                                         callback_data="yts_next")
+
+                ]
+            ]
+        ),
+        parse_mode="markdown", disable_web_page_preview=True,
+    )
+
+
+@app.on_callback_query(filters.regex("yts_previous"))
+async def callback_query_previous_yts(_, message):
+    global i
+    global m
+    global a
+    global query
+    i -= 1
+    result = (
+        f"**Page - {i+1}**\n\n"
+        f"➲Name: [{a[i]['Name']}]({a[i]['Url']})\n"
+        f"➲Genre: {a[i]['Genre']} || Released on: {a[i]['ReleasedDate']}\n" 
+        f"➲Rating: {a[i]['Rating']} || ➲Likes: {a[i]['Likes']}\n"
+        f"➲Duration: {a[i]['Runtime']} || ➲Language: {a[i]['Language']}\n\n"
+        f"➲First Link: `{a[i]['Dwnload1']}`\n\n"
+        f"➲Second Link: `{a[i]['Download2']}`\n\n\n"
+    ),
+    poster = {a[i]['Poster']}
+    await m.edit(
+        photo=poster,
+        result,
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(f"Prev",
+                                         callback_data="yts_previous"),
+                    InlineKeyboardButton(f"{emoji.CROSS_MARK}",
+                                         callback_data="delete"),
+                    InlineKeyboardButton(f"Next",
+                                         callback_data="yts_next")
+                ]
+            ]
+        ),
+        parse_mode="markdown", disable_web_page_preview=True,
+    )
+
+@app.on_callback_query(filters.regex("delete"))
+async def callback_query_delete(_, message):
+    global m
+    global i
+    global a
+    global query
+    await m.delete()
+    m = None
+    i = 0
+    a = None
+    query = None    
+
+#====== yts =======#
 
 @app.on_message(filters.command(['tshelp', f'tshelp{BOT_USERNAME}']))
 def searchhelp(client, message):

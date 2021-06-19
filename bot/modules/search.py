@@ -256,46 +256,46 @@ class TorrentSearch:
 RESULT_STR_1337 = (
     "➲Name: `{Name}`\n"
     "➲Category: `{Category}` || ➲Size: `{Size}`\n"
-    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n"
+    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n\n"
 )
 RESULT_STR_PIRATEBAY = (
     "➲Name: `{Name}`\n"
     "➲Category: `{Category}` || ➲Size: `{Size}`\n"
-    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n"
+    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n\n"
 )
 RESULT_STR_TGX = (
     "➲Name: `{Name}`\n" 
     "➲Category: `{Category}` || ➲Size: `{Size}`\n"
-    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n"
+    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n\n"
     "➲Torrent: `{TorrentLink}`\n\n"
 )
 RESULT_STR_EZTV = (
     "➲Name: `{Name}`\n"
-    "➲Size: `{Size}` || ➲Seeders: `{Seeds}`\n"
+    "➲Size: `{Size}` || ➲Seeders: `{Seeds}`\n\n"
     "➲Torrent: `{Torrent}`\n\n"
 )
 RESULT_STR_TORLOCK = (
     "➲Name: `{Name}`\n"
     "➲Category: `{Category}` || ➲Size: `{Size}`\n"
-    "➲Seeders: `{Seeds}` || ➲Leechers: `{Peers}`\n"
-    "➲Torrent: `{Torrent}`\n"
+    "➲Seeders: `{Seeds}` || ➲Leechers: `{Peers}`\n\n"
+    "➲Torrent: `{Torrent}`\n\n"
 )
 RESULT_STR_RARBG = (
     "➲Name: `{Name}`\n"
     "➲Category: `{Category}` || ➲Size: `{Size}`\n"
-    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
+    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n\n"
 )
 RESULT_STR_NYAASI = (
     "➲Name: `{Name}`\n"
     "➲Category: `{Category}` || ➲Size: `{Size}`\n"
     "➲Seeders: `{Seeder}` || ➲Leechers: `{Leecher}`\n\n"
-    "➲Torrent: `{TorrentLink}`\n"
+    "➲Torrent: `{TorrentLink}`\n\n"
 
 )
 RESULT_STR_ALL = (
     "➲Name: `{Name}`\n"
     "➲Category: `{Category}` || ➲Size: `{Size}`\n"
-    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n"
+    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n\n"
 )
 
 torrents_dict = {
@@ -342,7 +342,7 @@ async def find_yts(_, message):
         f"➲Duration: {a[i]['Runtime']} || ➲Language: {a[i]['Language']}\n\n"
         f"➲First Link: `{a[i]['Dwnload1']}`\n\n"
         f"➲Second Link: `{a[i]['Download2']}`\n\n\n"
-    ),
+    )
     poster = {a[i]['Poster']}
     await m.edit(
         photo=poster,
@@ -376,7 +376,7 @@ async def callback_query_next_yts(_, message):
         f"➲Duration: {a[i]['Runtime']} || ➲Language: {a[i]['Language']}\n\n"
         f"➲First Link: `{a[i]['Dwnload1']}`\n\n"
         f"➲Second Link: `{a[i]['Download2']}`\n\n\n"
-    ),
+    )
     poster = {a[i]['Poster']}
     await m.edit(
         photo=poster,
@@ -429,7 +429,7 @@ async def callback_query_previous_yts(_, message):
                                          callback_data="yts_next")
                 ]
             ]
-        ),
+        )
         parse_mode="markdown", disable_web_page_preview=True,
     )
 

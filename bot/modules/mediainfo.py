@@ -8,8 +8,9 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from bot import app
 from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper import post_to_telegraph, runcmd, safe_filename
+from bot.modules.search import BOT_USERNAME
 
-@app.on_message(filters.command(BotCommands.MediaInfoCommand))
+@app.on_message(filters.command([BotCommands.MediaInfoCommand, BotCommands.MediaInfoCommand{BOT_USERNAME}]))
 async def mediainfo(client, message):
     reply = message.reply_to_message
     if not reply:

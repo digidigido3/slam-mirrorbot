@@ -187,14 +187,11 @@ class TorrentSearch:
         app.add_handler(CallbackQueryHandler(self.next, filters.regex(f"{self.command}_next")))
 
     def get_formatted_string(self, values):
-        string = self.RESULT_STR.format(**values)
         magnet = values.get('magnet', values.get('Magnet'))  # Avoid updating source dict
-        down1 = values.get('Dwnload1', values.get('Dwnload1')) # Avoid updating source dict
-        down2 = values.get('Download2', values.get('Download2')) # Avoid updating source dict
         if (magnet):
             string += f"➲Magnet: `{magnet.split('&tr', 1)[0]}`"
-        elif (down1) or (down2):
-            string += f"➲First Link: `{down1.split('&tr', 1)[0]}`\n\n➲Second Link: `{down2.split('&tr', 1)[0]}"
+        else:
+            string += f"➲Magnet: `None`"
         return string
 
     async def update_message(self):
@@ -261,60 +258,53 @@ class TorrentSearch:
 
 RESULT_STR_1337 = (
     "➲Name: `{Name}`\n"
-    "➲Category: `{Category}`\n"
-    "➲Size: `{Size}`\n"
+    "➲Category: `{Category}` || ➲Size: `{Size}`\n"
     "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n"
 )
 RESULT_STR_PIRATEBAY = (
     "➲Name: `{Name}`\n"
-    "➲Category: `{Category}`\n"
-    "➲Size: `{Size}`\n"
+    "➲Category: `{Category}` || ➲Size: `{Size}`\n"
     "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n"
 )
 RESULT_STR_TGX = (
     "➲Name: `{Name}`\n" 
-    "➲Category: `{Category}`\n"
-    "➲Size: `{Size}`\n"
+    "➲Category: `{Category}` || ➲Size: `{Size}`\n"
     "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n"
-    "➲Torrent: `{TorrentLink}`\n"
+    "➲Torrent: `{TorrentLink}`\n\n"
 )
 RESULT_STR_YTS = (
     "➲Name: `{Name}`\n"
     "➲Genre: `{Genre}` || ➲Rating: `{Rating}`\n"
-    "➲Duration: `{Runtime}`\n"
-    "➲Released Date: `{ReleasedDate}`\n"
+    "➲Duration: `{Runtime}` || ➲Released Date: `{ReleasedDate}`\n"
+    "➲First Link: `{Dwnload1}`\n\n"
+    "➲Second Link: `{Download2}"
 )
 RESULT_STR_EZTV = (
     "➲Name: `{Name}`\n"
-    "➲Size: `{Size}`\n"
-    "➲Seeders: `{Seeds}`\n"
-    "➲Torrent: `{Torrent}`\n"
+    "➲Size: `{Size}` || ➲Seeders: `{Seeds}`\n"
+    "➲Torrent: `{Torrent}`\n\n"
 )
 RESULT_STR_TORLOCK = (
     "➲Name: `{Name}`\n"
-    "➲Category: `{Category}`\n"
-    "➲Size: `{Size}`\n"
+    "➲Category: `{Category}` || ➲Size: `{Size}`\n"
     "➲Seeders: `{Seeds}` || ➲Leechers: `{Peers}`\n"
     "➲Torrent: `{Torrent}`\n"
 )
 RESULT_STR_RARBG = (
     "➲Name: `{Name}`\n"
-    "➲Category: `{Category}`\n"
-    "➲Size: `{Size}`\n"
+    "➲Category: `{Category}` || ➲Size: `{Size}`\n"
     "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
 )
 RESULT_STR_NYAASI = (
     "➲Name: `{Name}`\n"
-    "➲Category: `{Category}`\n"
-    "➲Size: `{Size}`\n"
-    "➲Seeders: `{Seeder}` || ➲Leechers: `{Leecher}`\n"
+    "➲Category: `{Category}` || ➲Size: `{Size}`\n"
+    "➲Seeders: `{Seeder}` || ➲Leechers: `{Leecher}`\n\n"
     "➲Torrent: `{TorrentLink}`\n"
 
 )
 RESULT_STR_ALL = (
     "➲Name: `{Name}`\n"
-    "➲Category: `{Category}`\n"
-    "➲Size: `{Size}`\n"
+    "➲Category: `{Category}` || ➲Size: `{Size}`\n"
     "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n"
 )
 

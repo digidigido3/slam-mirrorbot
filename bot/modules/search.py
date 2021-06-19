@@ -321,7 +321,7 @@ torrents_dict = {
     'torlock': {'source': f"{TORRENT_API_URL}/api/torlock/", 'result_str': RESULT_STR_TORLOCK},
     'rarbg': {'source': f"{TORRENT_API_URL}/api/rarbg/", 'result_str': RESULT_STR_RARBG},
     'nyaasi': {'source': f"{TORRENT_API_URL}/api/rarbg/", 'result_str': RESULT_STR_RARBG}, # For Alternative Search For Nyaa.si
-    'torrent': {'source': f"{TORRENT_API_URL}/api/all/", 'result_str': RESULT_STR_ALL}
+    'ts': {'source': f"{TORRENT_API_URL}/api/all/", 'result_str': RESULT_STR_ALL}
 }
 
 torrent_handlers = []
@@ -349,7 +349,7 @@ def searchhelp(client, message):
 • /torlock <i>[search query]</i>
 • /rarbg <i>[search query]</i>
 • /nyaasi <i>[search query]</i>
-• /torrent <i>[search query]</i>
+• /ts <i>[search query]</i>
 '''
     message.reply_photo(photo=IMAGE_URL, caption=help_string, parse_mode="html", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='delete_end'), InlineKeyboardButton(f"APIs Url", url=f'{TORRENT_API_URL}')]]))
 

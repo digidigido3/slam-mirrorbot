@@ -7,9 +7,6 @@ import json
 import feedparser
 import requests
 
-#from telegram.ext import CommandHandler
-#from telegram import ParseMode
-
 from urllib.parse import quote as urlencode, urlsplit
 
 from pyrogram import Client, filters, emoji
@@ -17,8 +14,7 @@ from pyrogram.parser import html as pyrogram_html
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.handlers import MessageHandler, CallbackQueryHandler
 
-from bot import app, IMAGE_URL, AUTHORIZED_CHATS, OWNER_ID, getConfig
-#from bot import dispatcher 
+from bot import app, IMAGE_URL, getConfig
 from bot.helper import custom_filters
 from bot.helper.telegram_helper.filters import CustomFilters
 
@@ -268,17 +264,22 @@ RESULT_STR_TGX = (
     "➲Name: `{Name}`\n" 
     "➲Category: `{Category}` || ➲Size: `{Size}`\n"
     "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n\n"
-    "➲Torrent: `{TorrentLink}`\n\n"
 )
 RESULT_STR_EZTV = (
     "➲Name: `{Name}`\n"
-    "➲Size: `{Size}` || ➲Seeders: `{Seeds}`\n\n"
+    "➲Size: `{Size}` || ➲Seeders: `{Seeders}`\n\n"
+    "➲Torrent: `{Torrent}`\n\n"
+)
+RESULT_STR_YTS = (
+    "➲Name: `{Name}`\n"
+    "➲Genre: `{Genre}`\n"
+    "➲Detail: `{Size}` `{Quality} {Type}`\n\n"
     "➲Torrent: `{Torrent}`\n\n"
 )
 RESULT_STR_TORLOCK = (
     "➲Name: `{Name}`\n"
     "➲Category: `{Category}` || ➲Size: `{Size}`\n"
-    "➲Seeders: `{Seeds}` || ➲Leechers: `{Peers}`\n\n"
+    "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n\n"
     "➲Torrent: `{Torrent}`\n\n"
 )
 RESULT_STR_RARBG = (
@@ -306,6 +307,7 @@ torrents_dict = {
     'eztv': {'source': f"{TORRENT_API_URL}/api/eztv/", 'result_str': RESULT_STR_EZTV},
     'torlock': {'source': f"{TORRENT_API_URL}/api/torlock/", 'result_str': RESULT_STR_TORLOCK},
     'rarbg': {'source': f"{TORRENT_API_URL}/api/rarbg/", 'result_str': RESULT_STR_RARBG},
+    'yts': {'source': f"{TORRENT_API_URL}/api/yts/", 'result_str': RESULT_STR_YTS},
     'nyaasi': {'source': f"{TORRENT_API_URL}/api/rarbg/", 'result_str': RESULT_STR_RARBG}, # For Alternative Search For Nyaa.si
     'ts': {'source': f"{TORRENT_API_URL}/api/all/", 'result_str': RESULT_STR_ALL}
 }
@@ -333,6 +335,7 @@ def searchhelp(client, message):
 • /eztv <i>[search query]</i>
 • /torlock <i>[search query]</i>
 • /rarbg <i>[search query]</i>
+• /yts <i>[search query]</i>
 • /nyaasi <i>[search query]</i>
 • /torrent <i>[search query]</i>
 '''
@@ -343,6 +346,3 @@ async def delete_button(_, query):
     data = query.data.split('_')[1]
     if data == 'end':
         return await query.message.delete()
-    
-#SEARCHHELP_HANDLER = CommandHandler("tshelp", searchhelp, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-#dispatcher.add_handler(SEARCHHELP_HANDLER)

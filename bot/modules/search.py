@@ -181,11 +181,27 @@ class TorrentSearch:
         app.add_handler(CallbackQueryHandler(self.delete, filters.regex(f"{self.command}_delete")))
         app.add_handler(CallbackQueryHandler(self.next, filters.regex(f"{self.command}_next")))
 
+    @staticmethod
+    def format_magnet(string: str):
+        if not string:
+            return ""
+        return string.split('&tr', 1)[0]
+
     def get_formatted_string(self, values):
         string = self.RESULT_STR.format(**values)
-        magnet = values.get('magnet', values.get('Magnet'))  # Avoid updating source dict
-        if (magnet):
-            string += f"➲Magnet: `{magnet.split('&tr', 1)[0]}`"
+        extra = ""
+        if "Files" in values:
+            tmp_str = "➲[{Quality} - {Type} ({Size})]({Torrent}): `{magnet}`"
+            extra += "\n".join(
+                tmp_str.format(**f, magnet=self.format_magnet(f['Magnet']))
+                for f in values['Files']
+            )
+        else:
+            magnet = values.get('magnet', values.get('Magnet'))  # Avoid updating source dict
+            if magnet:
+                extra += f"➲Magnet: `{self.format_magnet(magnet)}`"
+        if (extra):
+            string += "\n" + extra
         return string
     
     async def update_message(self):
@@ -265,6 +281,9 @@ RESULT_STR_TGX = (
     "➲Category: `{Category}` || ➲Size: `{Size}`\n"
     "➲Seeders: `{Seeders}` || ➲Leechers: `{Leechers}`\n\n"
 )
+RESULT_STR_YTS = (
+    "➲Name: `{Name}`"
+)
 RESULT_STR_EZTV = (
     "➲Name: `{Name}`\n"
     "➲Size: `{Size}` || ➲Seeders: `{Seeders}`\n\n"
@@ -286,17 +305,23 @@ RESULT_STR_NYAASI = (
     "➲Category: `{Category}` || ➲Size: `{Size}`\n"
     "➲Seeders: `{Seeder}` || ➲Leechers: `{Leecher}`\n\n"
     "➲Torrent: `{TorrentLink}`\n\n"
-
+)
+RESULT_STR_ALL = (
+    "➲Name: `{Name}`\n"
+    "➲Size: {Size}\n"
+    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}"
 )
 
 torrents_dict = {
     '1337x': {'source': f"{TORRENT_API_URL}/api/1337x/", 'result_str': RESULT_STR_1337X},
     'piratebay': {'source': f"{TORRENT_API_URL}/api/piratebay/", 'result_str': RESULT_STR_PIRATEBAY},
     'tgx': {'source': f"{TORRENT_API_URL}/api/tgx/", 'result_str': RESULT_STR_TGX},
+    'yts': {'source': f"{TORRENT_API_URL}/api/yts/", 'result_str': RESULT_STR_YTS},
     'eztv': {'source': f"{TORRENT_API_URL}/api/eztv/", 'result_str': RESULT_STR_EZTV},
     'torlock': {'source': f"{TORRENT_API_URL}/api/torlock/", 'result_str': RESULT_STR_TORLOCK},
     'rarbg': {'source': f"{TORRENT_API_URL}/api/rarbg/", 'result_str': RESULT_STR_RARBG},
     'nyaasi': {'source': f"{TORRENT_API_URL}/api/rarbg/", 'result_str': RESULT_STR_RARBG}, # For Alternative Search For Nyaa.si
+    'torrent': {'source': f"{TORRENT_API_URL}/api/all/", 'result_str': RESULT_STR_ALL}
 }
 
 torrent_handlers = []
@@ -319,10 +344,12 @@ def searchhelp(client, message):
 • /1337x <i>[search query]</i>
 • /piratebay <i>[search query]</i>
 • /tgx <i>[search query]</i>
+• /yts <i>[search query]</i>
 • /eztv <i>[search query]</i>
 • /torlock <i>[search query]</i>
 • /rarbg <i>[search query]</i>
 • /nyaasi <i>[search query]</i>
+• /torrent <i>[search query]</i>
 '''
     message.reply_photo(photo=IMAGE_URL, caption=help_string, parse_mode="html", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='delete_end'), InlineKeyboardButton(f"APIs Url", url=f'{TORRENT_API_URL}')]]))
 

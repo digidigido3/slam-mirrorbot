@@ -191,7 +191,7 @@ class TorrentSearch:
         string = self.RESULT_STR.format(**values)
         extra = ""
         if "Files" in values:
-            tmp_str = "➲Detail: `{Quality}` - `{Type}` `({Size})`\n\n➲Torrent: `{Torrent}`\n\n➲Magnet: `{magnet}`"
+            tmp_str = "➲Detail: `{Quality}` - `{Type}` `({Size})`\n➲Torrent: `{Torrent}`\n➲Magnet: `{magnet}`"
             extra += "\n".join(
                 tmp_str.format(**f, magnet=self.format_magnet(f['Magnet']))
                 for f in values['Files']

@@ -328,7 +328,7 @@ async def find_yts(_, message):
     m = await message.reply_text("Searching")
     try:
         async with aiohttp.ClientSession() as session:
-            async with session.get(f"{TORRENT_API_URL}/yts/{query}") \
+            async with session.get(f"{TORRENT_API_URL}/api/yts/{query}") \
                     as resp:
                 a = json.loads(await resp.text())
     except:

@@ -193,7 +193,7 @@ class TorrentSearch:
         if (magnet):
             string += f"➲Magnet: `{magnet.split('&tr', 1)[0]}`"
         elif (down1) or (down2):
-            string += f"➲First Link: `{down1}`\n\n➲Second Link: `{down2}"
+            string += f"➲First Link: `{down1.split('&tr', 1)[0]}`\n\n➲Second Link: `{down2.split('&tr', 1)[0]}"
         return string
 
     async def update_message(self):
@@ -333,7 +333,7 @@ torrent_handlers = []
 for command, value in torrents_dict.items():
     torrent_handlers.append(TorrentSearch(command, value['source'], value['result_str']))
 
-@app.on_message(filters.command('tshelp', f'tshelp{BOT_USERNAME}'))
+@app.on_message(filters.command(['tshelp', f'tshelp{BOT_USERNAME}']))
 def searchhelp(client, message):
     help_string = '''
 <b>Example Usage:</b> <code>/nyaa naruto</code>

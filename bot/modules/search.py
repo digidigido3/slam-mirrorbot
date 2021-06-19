@@ -343,20 +343,7 @@ async def find_yts(_, message):
         f"➲First Link: `{a[i]['Dwnload1']}`\n\n"
         f"➲Second Link: `{a[i]['Download2']}`\n\n\n"
     )
-    await m.edit(
-        result,
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(f"Next",
-                                         callback_data="yts_next"),
-                    InlineKeyboardButton(f"{emoji.CROSS_MARK}",
-                                         callback_data="delete")
-                ]
-            ]
-        ),
-        parse_mode="markdown", disable_web_page_preview=True,
-    )
+    await m.edit(caption=result, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"Next", callback_data="yts_next"), InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data="delete")]]), parse_mode="markdown", disable_web_page_preview=True)
 
 
 @app.on_callback_query(filters.regex("yts_next"))
@@ -375,23 +362,7 @@ async def callback_query_next_yts(_, message):
         f"➲First Link: `{a[i]['Dwnload1']}`\n\n"
         f"➲Second Link: `{a[i]['Download2']}`\n\n\n"
     )
-    await m.edit(
-        result,
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(f"Prev",
-                                         callback_data="yts_previous"),
-                    InlineKeyboardButton(f"{emoji.CROSS_MARK}",
-                                         callback_data="delete"),
-                    InlineKeyboardButton(f"Next",
-                                         callback_data="yts_next")
-
-                ]
-            ]
-        ),
-        parse_mode="markdown", disable_web_page_preview=True,
-    )
+    await m.edit(caption=result, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"Prev", callback_data="yts_previous"), InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data="delete"), InlineKeyboardButton(f"Next", callback_data="yts_next")]]), parse_mode="markdown", disable_web_page_preview=True)
 
 
 @app.on_callback_query(filters.regex("yts_previous"))
@@ -410,22 +381,7 @@ async def callback_query_previous_yts(_, message):
         f"➲First Link: `{a[i]['Dwnload1']}`\n\n"
         f"➲Second Link: `{a[i]['Download2']}`\n\n\n"
     )
-    await m.edit(
-        result,
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(f"Prev",
-                                         callback_data="yts_previous"),
-                    InlineKeyboardButton(f"{emoji.CROSS_MARK}",
-                                         callback_data="delete"),
-                    InlineKeyboardButton(f"Next",
-                                         callback_data="yts_next")
-                ]
-            ]
-        ),
-        parse_mode="markdown", disable_web_page_preview=True,
-    )
+    await m.edit(caption=result, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"Prev", callback_data="yts_previous"), InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data="delete"), InlineKeyboardButton(f"Next", callback_data="yts_next")]]), parse_mode="markdown", disable_web_page_preview=True)
 
 @app.on_callback_query(filters.regex("delete"))
 async def callback_query_delete(_, message):

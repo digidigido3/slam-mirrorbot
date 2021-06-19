@@ -75,7 +75,7 @@ async def update_it(client, message):
         else:
             remote = repo.create_remote("heroku", HEROKU_URL)
         try:
-            remote.push(refspec=f"HEAD:refs/heads/{UPSTREAM_BRANCH}", force=True)
+            remote.push(refspec=f"HEAD:refs/heads/master", force=True)
         except BaseException as error:
             await msg_.edit(f"**Updater Error** \nTraceBack : `{error}`")
             return repo.__del__()

@@ -108,7 +108,6 @@ async def init_search(client, message, query, sukebei):
 @app.on_callback_query(custom_filters.callback_data('nyaa_nop'))
 async def nyaa_nop(client, callback_query):
     await callback_query.answer(cache_time=3600)
-    await callback_query.delete()
 
 callback_lock = asyncio.Lock()
 @app.on_callback_query(custom_filters.callback_data(['nyaa_back', 'nyaa_next']))
@@ -141,6 +140,7 @@ async def nyaa_callback(client, callback_query):
         buttons = [InlineKeyboardButton(f'𝗣𝗿𝗲𝘃', 'nyaa_back'), InlineKeyboardButton(f'{current_page}/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'𝗡𝗲𝘅𝘁', 'nyaa_next')]
         if ttl_ended:
             buttons = [InlineKeyboardButton('Search Expired', 'nyaa_nop')]
+            await message.delete()
         else:
             if current_page == 1:
                 buttons.pop(0)
@@ -190,7 +190,7 @@ class TorrentSearch:
         magnet = values.get('magnet', values.get('Magnet'))  # Avoid updating source dict
         if (magnet):
             string += f"➲Magnet: `{magnet.split('&tr', 1)[0]}`"
-        else:
+        elif (magnet) is None:
             string += f"➲Magnet: `None`"
         return string
 

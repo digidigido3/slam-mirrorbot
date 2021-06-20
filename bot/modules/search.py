@@ -264,12 +264,12 @@ class TorrentSearch:
         global message
         global response
         global response_range
+        await message.delete()
         index = 0
         query = None
         message = None
         response = None
         response_range = None
-        await self.message.delete()
 
     async def previous(self, client, message):
         self.index -= 1

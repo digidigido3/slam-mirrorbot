@@ -76,6 +76,10 @@ ignore = set()
 
 @app.on_message(filters.command(['nyaa']))
 async def nyaa_search(client, message):
+    try:
+        await message.delete()
+    except:
+        pass
     text = message.text.split(' ')
     text.pop(0)
     query = ' '.join(text)
@@ -83,6 +87,10 @@ async def nyaa_search(client, message):
 
 @app.on_message(filters.command(['sukebei']))
 async def nyaa_search_sukebei(client, message):
+    try:
+        await message.delete()
+    except:
+        pass
     text = message.text.split(' ')
     text.pop(0)
     query = ' '.join(text)
@@ -346,6 +354,10 @@ for command, value in torrents_dict.items():
 
 @app.on_message(filters.command(['tshelp', f'tshelp{BOT_USERNAME}']))
 def searchhelp(client, message):
+    try:
+        await message.delete()
+    except:
+        pass
     help_string = '''
 <b>Example Usage:</b> <code>/nyaa naruto</code>
 

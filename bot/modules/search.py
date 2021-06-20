@@ -80,6 +80,7 @@ async def nyaa_search(client, message):
     text.pop(0)
     query = ' '.join(text)
     await init_search(client, message, query, False)
+    await query.message.delete()
 
 @app.on_message(filters.command(['sukebei']))
 async def nyaa_search_sukebei(client, message):
@@ -87,6 +88,7 @@ async def nyaa_search_sukebei(client, message):
     text.pop(0)
     query = ' '.join(text)
     await init_search(client, message, query, True)
+    await query.message.delete()
 
 async def init_search(client, message, query, sukebei):
     result, pages, ttl = await return_search(query, sukebei=sukebei)
@@ -168,7 +170,7 @@ class TorrentSearch:
     response = None
     response_range = None
 
-    RESULT_LIMIT = 5
+    RESULT_LIMIT = 4
     RESULT_STR = None
 
     def __init__(self, command: str, source: str, result_str: str):

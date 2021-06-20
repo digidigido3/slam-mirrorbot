@@ -198,7 +198,7 @@ class TorrentSearch:
         string = self.RESULT_STR.format(**values)
         extra = ""
         if "Files" in values:
-            tmp_str = "➲**Detail:** `{Quality}` - `{Type}` `({Size})`\n➲**Torrent:** `{Torrent}`\n➲**Magnet:** `{magnet}`"
+            tmp_str = "\n➲**Detail:** `{Quality}` - `{Type}` `({Size})`\n➲**Torrent:** `{Torrent}`\n➲**Magnet:** `{magnet}`"
             extra += "\n".join(
                 tmp_str.format(**f, magnet=self.format_magnet(f['Magnet']))
                 for f in values['Files']
@@ -287,17 +287,17 @@ class TorrentSearch:
 RESULT_STR_1337X = (
     "➲**Name:** `{Name}`\n"
     "➲**Category:** `{Category}` || ➲**Size:** `{Size}`\n"
-    "➲**Seeders:** `{Seeders}` || ➲**Leechers:** `{Leechers}`\n"
+    "➲**Seeders:** `{Seeders}` || ➲**Leechers:** `{Leechers}`"
 )
 RESULT_STR_PIRATEBAY = (
     "➲**Name:** `{Name}`\n"
     "➲**Category:** `{Category}` || ➲**Size:** `{Size}`\n"
-    "➲**Seeders:** `{Seeders}` || ➲**Leechers:** `{Leechers}`\n"
+    "➲**Seeders:** `{Seeders}` || ➲**Leechers:** `{Leechers}`"
 )
 RESULT_STR_TGX = (
     "➲**Name:** `{Name}`\n"
     "➲**Category:** `{Category}` || ➲**Size:** `{Size}`\n"
-    "➲**Seeders:** `{Seeders}` || ➲**Leechers:** `{Leechers}`\n"
+    "➲**Seeders:** `{Seeders}` || ➲**Leechers:** `{Leechers}`"
 )
 RESULT_STR_YTS = (
     "➲**Name:** `{Name}`"
@@ -305,24 +305,24 @@ RESULT_STR_YTS = (
 RESULT_STR_EZTV = (
     "➲**Name:** `{Name}`\n"
     "➲**Size:** `{Size}` || ➲**Seeders:** `{Seeders}`\n"
-    "➲**Torrent:** `{Torrent}`\n"
+    "➲**Torrent:** `{Torrent}`"
 )
 RESULT_STR_TORLOCK = (
     "➲**Name:** `{Name}`\n"
     "➲**Category:** `{Category}` || ➲**Size:** `{Size}`\n"
     "➲**Seeders:** `{Seeders}` || ➲**Leechers:** `{Leechers}`\n"
-    "➲**Torrent:** `{Torrent}`\n"
+    "➲**Torrent:** `{Torrent}`"
 )
 RESULT_STR_RARBG = (
-    "➲Name: `{Name}`\n"
-    "➲Category: `{Category}` || ➲Size: `{Size}`\n"
-    "➲Seeders: {Seeders} || ➲Leechers: {Leechers}\n"
+    "➲**Name:** `{Name}`\n"
+    "➲**Category:** `{Category}` || ➲**Size:** `{Size}`\n"
+    "➲**Seeders:** {Seeders} || ➲**Leechers:** {Leechers}"
 )
 RESULT_STR_NYAASI = (
     "➲**Name:** `{Name}`\n"
     "➲**Category:** `{Category}` || ➲Size: `{Size}`\n"
     "➲**Seeders:** `{Seeders}` || ➲Leechers: `{Leechers}`\n"
-    "➲**Torrent:** `{Torrent}`\n"
+    "➲**Torrent:** `{Torrent}`"
 )
 RESULT_STR_ALL = (
     "➲**Name:** `{Name}`\n"

@@ -259,12 +259,12 @@ class TorrentSearch:
         await self.update_message()
 
     async def delete(self, client, message):
-        global index
-        global query
-        global message
-        global response
-        global response_range
-        await message.delete()
+        global self.index
+        global self.query
+        global self.message
+        global self.response
+        global self.response_range
+        await self.message.delete()
         index = 0
         query = None
         message = None

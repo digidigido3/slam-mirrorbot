@@ -164,9 +164,14 @@ except KeyError:
     TORRENT_API_URL = 'https://torrenter-api.herokuapp.com'
 
 class TorrentSearch:
+    global index
+    global query
+    global messages
+    global response
+    global response_range
     index = 0
     query = None
-    message = None
+    messages = None
     response = None
     response_range = None
 
@@ -225,7 +230,7 @@ class TorrentSearch:
             for i in range(res_lim)
         )
 
-        await self.message.edit(
+        await self.messages.edit(
             result,
             reply_markup=InlineKeyboardMarkup([inline]),
             parse_mode="markdown",
@@ -241,7 +246,7 @@ class TorrentSearch:
             return
 
         query = urlencode(message.text.split(None, 1)[1])
-        self.message = await message.reply_text("Searching")
+        self.messages = await message.reply_text("Searching")
         try:
             self.index = 0
             async with aiohttp.ClientSession() as session:
@@ -254,23 +259,23 @@ class TorrentSearch:
                     self.response = result
                     self.response_range = range(0, len(self.response), self.RESULT_LIMIT)
         except:
-            await self.message.edit("No Results Found.")
+            await self.messages.edit("No Results Found.")
             return
         await self.update_message()
 
     async def delete(self, client, message):
-        global self.index
-        global self.query
-        global self.message
-        global self.response
-        global self.response_range
-        await self.message.delete()
+        global index
+        global query
+        global messages
+        global response
+        global response_range
         index = 0
         query = None
         message = None
         response = None
         response_range = None
-
+        await self.messages.delete()
+        
     async def previous(self, client, message):
         self.index -= 1
         await self.update_message()

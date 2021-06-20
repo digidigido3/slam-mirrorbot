@@ -353,7 +353,7 @@ for command, value in torrents_dict.items():
 
 
 @app.on_message(filters.command(['tshelp', f'tshelp{BOT_USERNAME}']))
-def searchhelp(client, message):
+async def searchhelp(client, message):
     try:
         await message.delete()
     except:

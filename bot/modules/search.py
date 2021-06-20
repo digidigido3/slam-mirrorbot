@@ -206,7 +206,7 @@ class TorrentSearch:
         else:
             magnet = values.get('magnet', values.get('Magnet'))  # Avoid updating source dict
             if magnet:
-                extra += f"➲Magnet: `{self.format_magnet(magnet)}`"
+                extra += f"➲**Magnet:** `{self.format_magnet(magnet)}`"
         if (extra):
             string += "\n" + extra
         return string

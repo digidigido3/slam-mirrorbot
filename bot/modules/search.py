@@ -80,7 +80,6 @@ async def nyaa_search(client, message):
     text.pop(0)
     query = ' '.join(text)
     await init_search(client, message, query, False)
-    await query.message.delete()
 
 @app.on_message(filters.command(['sukebei']))
 async def nyaa_search_sukebei(client, message):
@@ -88,18 +87,17 @@ async def nyaa_search_sukebei(client, message):
     text.pop(0)
     query = ' '.join(text)
     await init_search(client, message, query, True)
-    await query.message.delete()
 
 async def init_search(client, message, query, sukebei):
     result, pages, ttl = await return_search(query, sukebei=sukebei)
     if not result:
-        await message.reply_text('No results found')
+        await message.reply_text('𝗡𝗼 𝗿𝗲𝘀𝘂𝗹𝘁𝘀 𝗳𝗼𝘂𝗻𝗱.')
     else:
-        buttons = [InlineKeyboardButton(f'1/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'𝗡𝗲𝘅𝘁', 'nyaa_next')]
+        buttons = [InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='delete_end'), InlineKeyboardButton(f'1/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'𝗡𝗲𝘅𝘁', 'nyaa_next')]
         if pages == 1:
             buttons.pop()
         reply = await message.reply_text(result, reply_markup=InlineKeyboardMarkup([
-            buttons 
+            buttons
         ]))
         message_info[(reply.chat.id, reply.message_id)] = message.from_user.id, ttl, query, 1, pages, sukebei
 
@@ -137,7 +135,7 @@ async def nyaa_callback(client, callback_query):
             text, pages, ttl = await return_search(query, current_page, sukebei)
         buttons = [InlineKeyboardButton(f'𝗣𝗿𝗲𝘃', 'nyaa_back'), InlineKeyboardButton(f'{current_page}/{pages}', 'nyaa_nop'), InlineKeyboardButton(f'𝗡𝗲𝘅𝘁', 'nyaa_next')]
         if ttl_ended:
-            buttons = [InlineKeyboardButton('Search Expired', 'nyaa_nop')]
+            buttons = [InlineKeyboardButton('𝗦𝗲𝗮𝗿𝗰𝗵 𝗘𝘅𝗽𝗶𝗿𝗲𝗱', 'nyaa_nop')]
         else:
             if current_page == 1:
                 buttons.pop(0)

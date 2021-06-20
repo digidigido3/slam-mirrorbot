@@ -145,7 +145,8 @@ async def nyaa_callback(client, callback_query):
                 buttons.pop()
         if ttl_ended or current_page != og_current_page:
             await callback_query.edit_message_text(text, reply_markup=InlineKeyboardMarkup([
-                buttons
+                buttons,
+                [InlineKeyboardButton(f"{emoji.CROSS_MARK}", callback_data='delete_end')]
             ]))
         message_info[message_identifier] = user_id, ttl, query, current_page, pages, sukebei
         if ttl_ended:
@@ -175,7 +176,7 @@ class TorrentSearch:
     response = None
     response_range = None
 
-    RESULT_LIMIT = 4
+    RESULT_LIMIT = 5
     RESULT_STR = None
 
     def __init__(self, command: str, source: str, result_str: str):

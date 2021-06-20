@@ -243,6 +243,7 @@ class TorrentSearch:
         query = urlencode(message.text.split(None, 1)[1])
         self.message = await message.reply_text("Searching")
         try:
+            self.index = 0
             async with aiohttp.ClientSession() as session:
                 async with session.get(f"{self.source}/{query}") as resp:
                     if (resp.status != 200):
@@ -258,6 +259,11 @@ class TorrentSearch:
         await self.update_message()
 
     async def delete(self, client, message):
+        global index
+        global query
+        global message
+        global response
+        global response_range
         index = 0
         query = None
         message = None
